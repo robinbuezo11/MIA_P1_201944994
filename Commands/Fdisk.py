@@ -9,6 +9,12 @@ def fdisk(path, size, unit, name):
     mbr = MBR()
     Fread_displacement(file, 0, mbr)
     cursor = file.tell()
+    for i in range(4):
+        part = Fread_displacement(file, cursor, Partition())
+        if part:
+            cursor += part.part_s * 1024
+        else:
+            break
 
     if unit == 'M':
         size = size * 1024

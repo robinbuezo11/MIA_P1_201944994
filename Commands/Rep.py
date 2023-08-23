@@ -18,7 +18,7 @@ def rep(path):
         part = Fread_displacement(file, cursor, part)
         if part:
             part.display_info()
-            cursor += part.size
+            cursor += part.part_s * 1024
             print("****************************")
         else:
             break
