@@ -1,0 +1,195 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> init
+Rule 1     init -> list_commands
+Rule 2     list_commands -> list_commands commands
+Rule 3     list_commands -> commands
+Rule 4     commands -> command_execute
+Rule 5     commands -> command_mkdisk
+Rule 6     commands -> command_rep
+Rule 7     command_execute -> EXECUTE GUION PATH IGUAL CADENA
+Rule 8     command_mkdisk -> MKDISK
+Rule 9     command_rep -> REP
+
+Terminals, with rules where they appear
+
+CADENA               : 7
+EXECUTE              : 7
+GUION                : 7
+IGUAL                : 7
+MKDISK               : 8
+PATH                 : 7
+REP                  : 9
+error                : 
+
+Nonterminals, with rules where they appear
+
+command_execute      : 4
+command_mkdisk       : 5
+command_rep          : 6
+commands             : 2 3
+init                 : 0
+list_commands        : 1 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . init
+    (1) init -> . list_commands
+    (2) list_commands -> . list_commands commands
+    (3) list_commands -> . commands
+    (4) commands -> . command_execute
+    (5) commands -> . command_mkdisk
+    (6) commands -> . command_rep
+    (7) command_execute -> . EXECUTE GUION PATH IGUAL CADENA
+    (8) command_mkdisk -> . MKDISK
+    (9) command_rep -> . REP
+
+    EXECUTE         shift and go to state 7
+    MKDISK          shift and go to state 8
+    REP             shift and go to state 9
+
+    init                           shift and go to state 1
+    list_commands                  shift and go to state 2
+    commands                       shift and go to state 3
+    command_execute                shift and go to state 4
+    command_mkdisk                 shift and go to state 5
+    command_rep                    shift and go to state 6
+
+state 1
+
+    (0) S' -> init .
+
+
+
+state 2
+
+    (1) init -> list_commands .
+    (2) list_commands -> list_commands . commands
+    (4) commands -> . command_execute
+    (5) commands -> . command_mkdisk
+    (6) commands -> . command_rep
+    (7) command_execute -> . EXECUTE GUION PATH IGUAL CADENA
+    (8) command_mkdisk -> . MKDISK
+    (9) command_rep -> . REP
+
+    $end            reduce using rule 1 (init -> list_commands .)
+    EXECUTE         shift and go to state 7
+    MKDISK          shift and go to state 8
+    REP             shift and go to state 9
+
+    commands                       shift and go to state 10
+    command_execute                shift and go to state 4
+    command_mkdisk                 shift and go to state 5
+    command_rep                    shift and go to state 6
+
+state 3
+
+    (3) list_commands -> commands .
+
+    EXECUTE         reduce using rule 3 (list_commands -> commands .)
+    MKDISK          reduce using rule 3 (list_commands -> commands .)
+    REP             reduce using rule 3 (list_commands -> commands .)
+    $end            reduce using rule 3 (list_commands -> commands .)
+
+
+state 4
+
+    (4) commands -> command_execute .
+
+    EXECUTE         reduce using rule 4 (commands -> command_execute .)
+    MKDISK          reduce using rule 4 (commands -> command_execute .)
+    REP             reduce using rule 4 (commands -> command_execute .)
+    $end            reduce using rule 4 (commands -> command_execute .)
+
+
+state 5
+
+    (5) commands -> command_mkdisk .
+
+    EXECUTE         reduce using rule 5 (commands -> command_mkdisk .)
+    MKDISK          reduce using rule 5 (commands -> command_mkdisk .)
+    REP             reduce using rule 5 (commands -> command_mkdisk .)
+    $end            reduce using rule 5 (commands -> command_mkdisk .)
+
+
+state 6
+
+    (6) commands -> command_rep .
+
+    EXECUTE         reduce using rule 6 (commands -> command_rep .)
+    MKDISK          reduce using rule 6 (commands -> command_rep .)
+    REP             reduce using rule 6 (commands -> command_rep .)
+    $end            reduce using rule 6 (commands -> command_rep .)
+
+
+state 7
+
+    (7) command_execute -> EXECUTE . GUION PATH IGUAL CADENA
+
+    GUION           shift and go to state 11
+
+
+state 8
+
+    (8) command_mkdisk -> MKDISK .
+
+    EXECUTE         reduce using rule 8 (command_mkdisk -> MKDISK .)
+    MKDISK          reduce using rule 8 (command_mkdisk -> MKDISK .)
+    REP             reduce using rule 8 (command_mkdisk -> MKDISK .)
+    $end            reduce using rule 8 (command_mkdisk -> MKDISK .)
+
+
+state 9
+
+    (9) command_rep -> REP .
+
+    EXECUTE         reduce using rule 9 (command_rep -> REP .)
+    MKDISK          reduce using rule 9 (command_rep -> REP .)
+    REP             reduce using rule 9 (command_rep -> REP .)
+    $end            reduce using rule 9 (command_rep -> REP .)
+
+
+state 10
+
+    (2) list_commands -> list_commands commands .
+
+    EXECUTE         reduce using rule 2 (list_commands -> list_commands commands .)
+    MKDISK          reduce using rule 2 (list_commands -> list_commands commands .)
+    REP             reduce using rule 2 (list_commands -> list_commands commands .)
+    $end            reduce using rule 2 (list_commands -> list_commands commands .)
+
+
+state 11
+
+    (7) command_execute -> EXECUTE GUION . PATH IGUAL CADENA
+
+    PATH            shift and go to state 12
+
+
+state 12
+
+    (7) command_execute -> EXECUTE GUION PATH . IGUAL CADENA
+
+    IGUAL           shift and go to state 13
+
+
+state 13
+
+    (7) command_execute -> EXECUTE GUION PATH IGUAL . CADENA
+
+    CADENA          shift and go to state 14
+
+
+state 14
+
+    (7) command_execute -> EXECUTE GUION PATH IGUAL CADENA .
+
+    EXECUTE         reduce using rule 7 (command_execute -> EXECUTE GUION PATH IGUAL CADENA .)
+    MKDISK          reduce using rule 7 (command_execute -> EXECUTE GUION PATH IGUAL CADENA .)
+    REP             reduce using rule 7 (command_execute -> EXECUTE GUION PATH IGUAL CADENA .)
+    $end            reduce using rule 7 (command_execute -> EXECUTE GUION PATH IGUAL CADENA .)
+
