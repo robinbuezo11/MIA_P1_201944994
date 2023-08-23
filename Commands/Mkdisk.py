@@ -1,22 +1,34 @@
+import os
+import random
 from Objects.MBR import MBR
 from datetime import datetime
 from Utils.load import *
 
-def mkdisk():
+def mkdisk(path, size, unit):
     print('Ejecutando el comando MKDISK')
     print("=====Creando MBR======")
+
+    if unit == 'M':
+        size = size * 1024
+
     mbr = MBR()
-    mbr.set_info(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    mbr.set_info(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), size)
     mbr.display_info()
 
-    file_name = f'941Disco{mbr.mbr_dsk_signature}.adsj'
-    print("=====Creando Disco======")
-    if Fcreate_file(file_name): exit()
+    directory, file_name = os.path.split(path)
 
-    file = open(file_name, "rb+")
+    if directory != '':
+        if not os.path.exists(directory):
+            os.makedirs(directory)
+
+    print("=====Creando Disco======")
+    if Fcreate_file(path): return
+
+    file = open(path, "rb+")
 
     print("=====Aplicando Tamaño======")
-    Winit_size(file, mbr.mbr_tamano)
+    mb = int(mbr.mbr_tamano / 1024)
+    Winit_size(file, mb)
 
 
     print("=====Writing MBR======")
@@ -24,4 +36,4 @@ def mkdisk():
     file.close()
     print("=====Finalizando MKDISK======")
 
-    return file_name
+    return True

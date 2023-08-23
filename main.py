@@ -15,8 +15,9 @@ if __name__ == "__main__":
             parse_result = parser.parse(entrada)
             if isinstance(parse_result, list):
                if isinstance(parse_result[0], list):
-                  if parse_result[0][0] == 'execute':
-                     data = execute(parse_result[0][1])
-                     parse_res = parser.parse(data)
+                  for parse_res in parse_result:
+                     if parse_res[0] == 'execute':
+                        data = execute(parse_res[1])
+                        parse_res = parser.parse(data)
          except EOFError:
             break

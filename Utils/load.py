@@ -17,8 +17,10 @@ def Fread_displacement(file, displacement,obj):
         data = file.read(len(obj.doSerialize()))
         #print("Size data: ",  len(data))
         obj.doDeserialize(data)
+        return obj
     except Exception as e:
         print(f"Error reading object err: {e}")
+        return None
 
 def Fcreate_file(file_name):
     try:

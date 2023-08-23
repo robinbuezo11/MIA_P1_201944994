@@ -15,9 +15,9 @@ class MBR(ctypes.Structure):
     ]
 
     def __init__(self):
-        self.mbr_tamano = 5
+        self.mbr_tamano = 0
         self.mbr_fecha_creacion = b'\0'*19
-        self.mbr_dsk_signature = random.randint(1, 100)
+        self.mbr_dsk_signature = 0
 
     def _set_mbr_tamano(self, mbr_tamano):
         self.mbr_tamano = mbr_tamano
@@ -28,10 +28,10 @@ class MBR(ctypes.Structure):
     def _set_mbr_dsk_signature(self, mbr_dsk_signature):
         self.mbr_dsk_signature = mbr_dsk_signature
  
-    def set_info(self, mbr_fecha_creacion):
-        #self._set_mbr_tamano(mbr_tamano)
+    def set_info(self, mbr_fecha_creacion, mbr_tamano):
+        self._set_mbr_tamano(mbr_tamano)
         self._set_mbr_fecha_creacion(mbr_fecha_creacion)
-        #self._set_mbr_dsk_signature(mbr_dsk_signature)
+        self._set_mbr_dsk_signature(random.randint(1, 1000000))
     
     def display_info(self):
         print("Tamaño: ", self.mbr_tamano)
