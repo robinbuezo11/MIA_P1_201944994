@@ -23,6 +23,9 @@ class Partition(ctypes.Structure):
         self.part_s = 0
         self.part_name = b'\0'*16
 
+    def get_const(self):
+        return const
+
     def _set_part_status(self, part_status):
         self.part_status = coding_str(part_status, 1)
 
@@ -50,12 +53,12 @@ class Partition(ctypes.Structure):
         self._set_part_name(part_name)
     
     def display_info(self):
-        print("Status: ", self.part_status.decode())
-        print("Type: ", self.part_type.decode())
-        print("Fit: ", self.part_fit.decode())
+        print("Status: ", self.part_status.decode().upper())
+        print("Type: ", self.part_type.decode().upper())
+        print("Fit: ", self.part_fit.decode().upper())
         print("Start: ", self.part_start)
         print("Size: ", self.part_s)
-        print("Name: ", self.part_name.decode())
+        print("Name: ", self.part_name.decode().upper(), "\n")
 
     def doSerialize(self):
         return struct.pack(

@@ -1,23 +1,17 @@
 import os
-from Utils.load import * 
+from Utils.Utilities import *
+from Utils.Fmanager import * 
 from parser_ import *
 from Commands.Execute import execute
 
-if __name__ == "__main__":
-   print("=============CONSOLA DE COMANDOS================")
-   print("DIRECTORIO ACTUAL:", os.getcwd())
-   print("================================================")
+print()
+printSuccess("Robin Omar Buezo Díaz")
+printSuccess("201944994\n")
 
-   parser = get_parser()
-   while True:
-         try:
-            entrada = input('>> ')
-            parse_result = parser.parse(entrada)
-            if isinstance(parse_result, list):
-               if isinstance(parse_result[0], list):
-                  for parse_res in parse_result:
-                     if parse_res[0] == 'execute':
-                        data = execute(parse_res[1])
-                        parse_res = parser.parse(data)
-         except EOFError:
-            break
+printConsole(" *** Bienvenido al sistema de archivos *** ")
+
+parser = get_parser()
+while True:
+   entrada = input('\033[36m>> Ingrese un comando\n\033[00m')
+   print()
+   parse_result = parser.parse(entrada)

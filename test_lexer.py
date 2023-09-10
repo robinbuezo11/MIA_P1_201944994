@@ -19,7 +19,7 @@ def prueba_normal(input):
         print(tok.type, tok.value, tok.lineno, tok.lexpos)
 
 entrada = ''' 
-execute -path=C:/Users/Usuario/Desktop/entrada.txt
+rmdisk -path="/home/robin/Documentos/Disco1.dsk"
 '''
 
 prueba_normal(entrada)

@@ -1,5 +1,11 @@
+from Utils.Utilities import *
+
 def execute(path):
-    print('Ejecutando el comando EXECUTE')
-    file = open(path, 'r')
-    data = file.read()
-    return data
+    printConsole(f'Ejecutando el comando EXECUTE\n')
+    try:
+        file = open(path, 'r')
+        data = file.read()
+        return data
+    except:
+        printError(f'No se pudo abrir el archivo {path}')
+        return ''

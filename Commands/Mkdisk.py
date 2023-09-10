@@ -1,39 +1,60 @@
 import os
-import random
 from Objects.MBR import MBR
 from datetime import datetime
-from Utils.load import *
+from Utils.Fmanager import *
+from Utils.Utilities import *
 
-def mkdisk(path, size, unit):
-    print('Ejecutando el comando MKDISK')
-    print("=====Creando MBR======")
+def mkdisk(path, size, unit, fit):
+    printConsole('Ejecutando el comando MKDISK')
+    print("***** Creando MBR *****")
 
-    if unit == 'M':
+    if unit == 'm':
         size = size * 1024
 
+    fit = fit[0]
+
     mbr = MBR()
-    mbr.set_info(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), size)
+    mbr.set_info(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), size, fit)
     mbr.display_info()
 
+    print("\n***** Creando Disco *****")
     directory, file_name = os.path.split(path)
-
     if directory != '':
         if not os.path.exists(directory):
             os.makedirs(directory)
 
-    print("=====Creando Disco======")
-    if Fcreate_file(path): return
+    if Fcreate_file(path):
+        printSuccess(f'Se creo el disco {file_name} en {directory}')
+    else:
+        printError(f'No se pudo crear el disco {file_name} en {directory}')
+        return False
 
-    file = open(path, "rb+")
+    try:
+        file = open(path, "rb+")
+    except Exception as e:
+        printError(f"{e}")
+        return False
 
-    print("=====Aplicando Tamaño======")
+    print("\n***** Aplicando Tamaño *****")
     mb = int(mbr.mbr_tamano / 1024)
-    Winit_size(file, mb)
+    if Winit_size(file, mb):
+        printSuccess(f'Se aplico el tamaño {mb}MB al disco {file_name}')
+    else:
+        printError(f'No se pudo aplicar el tamaño al disco {file_name}')
+        return False
 
 
-    print("=====Writing MBR======")
-    Fwrite_displacement(file, 0, mbr)
-    file.close()
-    print("=====Finalizando MKDISK======")
-
+    print("\n***** Escribiendo MBR *****")
+    if Fwrite_displacement(file, 0, mbr):
+        printSuccess("Se escribio el MBR correctamente")
+    else:
+        printError("No se pudo escribir el MBR")
+    
+    try:
+        file.close()
+    except Exception as e:
+        printError(f"{e}")
+        return False
+    
+    printConsole("Finalizando MKDISK\n")
     return True

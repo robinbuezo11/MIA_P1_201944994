@@ -2,8 +2,9 @@ import ctypes
 import struct
 import random
 from Utils.Utilities import coding_str
+from Objects.Partition import Partition
 
-const = 'I19sI' 
+const = 'I19sIs' 
 #I es un entero de 4 bytes, 19s es un string de 26 bytes, I es un entero de 4 bytes
 
 class MBR(ctypes.Structure):
@@ -11,13 +12,19 @@ class MBR(ctypes.Structure):
     _fields_ = [
         ('mbr_tamano', ctypes.c_int),
         ('mbr_fecha_creacion', ctypes.c_char * 19),
-        ('mbr_dsk_signature', ctypes.c_int)
+        ('mbr_dsk_signature', ctypes.c_int),
+        ('dsk_fit', ctypes.c_char)
     ]
 
     def __init__(self):
         self.mbr_tamano = 0
         self.mbr_fecha_creacion = b'\0'*19
         self.mbr_dsk_signature = 0
+        self.dsk_fit = b'\0'
+        self.partitions = [Partition(), Partition(), Partition(), Partition()]
+
+    def get_const(self):
+        return const
 
     def _set_mbr_tamano(self, mbr_tamano):
         self.mbr_tamano = mbr_tamano
@@ -27,25 +34,50 @@ class MBR(ctypes.Structure):
 
     def _set_mbr_dsk_signature(self, mbr_dsk_signature):
         self.mbr_dsk_signature = mbr_dsk_signature
+
+    def _set_dsk_fit(self, dsk_fit):
+        self.dsk_fit = coding_str(dsk_fit, 1)
  
-    def set_info(self, mbr_fecha_creacion, mbr_tamano):
+    def set_info(self, mbr_fecha_creacion, mbr_tamano, dsk_fit):
         self._set_mbr_tamano(mbr_tamano)
         self._set_mbr_fecha_creacion(mbr_fecha_creacion)
-        self._set_mbr_dsk_signature(random.randint(1, 1000000))
+        self._set_mbr_dsk_signature(random.randint(1, 2**31 - 1))
+        self._set_dsk_fit(dsk_fit)
     
     def display_info(self):
+        print("\n*** MBR ***")
         print("Tamaño: ", self.mbr_tamano)
         print("Fecha de creacion: ", self.mbr_fecha_creacion.decode())
-        print("Signature: ", self.mbr_dsk_signature)
+        print("Identificador: ", self.mbr_dsk_signature)
+        print("Ajuste: ", self.dsk_fit.decode().upper())
+        print("\n* PARTICIONES *")
+        for i in range(4):
+            print(f'Particion {i+1}:')
+            if self.partitions[i].part_type == b'\0':
+                print("No hay particion")
+            else:
+                self.partitions[i].display_info()
 
     def doSerialize(self):
-        return struct.pack(
+        serialize = struct.pack(
             const,
             self.mbr_tamano,
             self.mbr_fecha_creacion,
-            self.mbr_dsk_signature
+            self.mbr_dsk_signature,
+            self.dsk_fit
         )
+        for i in range(4):
+            serialize += self.partitions[i].doSerialize()
+        return serialize
     
     def doDeserialize(self, data):
-        self.mbr_tamano, self.mbr_fecha_creacion, self.mbr_dsk_signature = struct.unpack(const, data)
+        sizeMBR = struct.calcsize(const)
+        sizePartition = struct.calcsize(Partition().get_const())
+
+        dataMBR = data[:sizeMBR]
+        self.mbr_tamano, self.mbr_fecha_creacion, self.mbr_dsk_signature, self.dsk_fit = struct.unpack(const, dataMBR)
+
+        for i in range(4):
+            dataPartition = data[sizeMBR + i*sizePartition: sizeMBR + (i+1)*sizePartition]
+            self.partitions[i].doDeserialize(dataPartition)
 

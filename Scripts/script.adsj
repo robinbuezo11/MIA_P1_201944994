@@ -1,6 +1,12 @@
-mkdisk -size=5 -unit=M -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk"
+#Script para ejecutar las pruebas de la fase 1
+#Se crea el disco
+mkdisk -unit=M -size=5 -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk"
+
+#Se crean las particiones
 fdisk -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk" -unit=M -name=Particion1 -size=1
-fdisk -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk" -unit=M -name=Particion2 -size=1
+fdisk -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk" -size=1 -unit=M -name=Particion2
 fdisk -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk" -unit=M -name=Particion3 -size=1
 fdisk -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk" -unit=M -size=1 -name=Particion4
-rep -path=/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk
+
+#Se genera el reporte de las particiones
+rep -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk"

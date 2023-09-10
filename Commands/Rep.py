@@ -1,27 +1,19 @@
 from Objects.MBR import MBR
-from Objects.Partition import Partition
-from Utils.load import *
+from Utils.Fmanager import *
+from Utils.Utilities import *
 
 def rep(path):
     print('Ejecutando el comando REP')
     mrb = MBR()
-    part = Partition()
 
-    file = open(path, "rb+")
+    try:
+        file = open(path, "rb+")
+    except:
+        printError(f'No se pudo abrir el archivo {path}')
+        return
 
     Fread_displacement(file, 0, mrb)
     print("=====Mostrando Reporte======\n")
     mrb.display_info()
-    print("****************************")
-    cursor = file.tell()
-    for i in range(4):
-        part = Fread_displacement(file, cursor, part)
-        if part:
-            part.display_info()
-            cursor += part.part_s * 1024
-            print("****************************")
-        else:
-            break
-    
     file.close()
     print("=====Finalizando REP======")
