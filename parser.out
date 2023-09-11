@@ -36,26 +36,33 @@ Rule 26    param_fdisk -> GUION SIZE IGUAL ENTERO
 Rule 27    param_fdisk -> GUION UNIT IGUAL CADENA_SC
 Rule 28    param_fdisk -> GUION NAME IGUAL CADENA
 Rule 29    param_fdisk -> GUION NAME IGUAL CADENA_SC
-Rule 30    command_rep -> REP GUION PATH IGUAL CADENA
-Rule 31    command_rep -> REP GUION PATH IGUAL CADENA_SC
+Rule 30    param_fdisk -> GUION TYPE IGUAL CADENA_SC
+Rule 31    param_fdisk -> GUION FIT IGUAL CADENA_SC
+Rule 32    param_fdisk -> GUION DELETE IGUAL CADENA_SC
+Rule 33    param_fdisk -> GUION ADD IGUAL ENTERO
+Rule 34    command_rep -> REP GUION PATH IGUAL CADENA
+Rule 35    command_rep -> REP GUION PATH IGUAL CADENA_SC
 
 Terminals, with rules where they appear
 
-CADENA               : 9 14 19 24 28 30
-CADENA_SC            : 10 15 17 18 20 25 27 29 31
+ADD                  : 33
+CADENA               : 9 14 19 24 28 34
+CADENA_SC            : 10 15 17 18 20 25 27 29 30 31 32 35
 COMMENT              : 
-ENTERO               : 16 26
+DELETE               : 32
+ENTERO               : 16 26 33
 EXECUTE              : 9 10
 FDISK                : 21
-FIT                  : 18
-GUION                : 9 10 14 15 16 17 18 19 20 24 25 26 27 28 29 30 31
-IGUAL                : 9 10 14 15 16 17 18 19 20 24 25 26 27 28 29 30 31
+FIT                  : 18 31
+GUION                : 9 10 14 15 16 17 18 19 20 24 25 26 27 28 29 30 31 32 33 34 35
+IGUAL                : 9 10 14 15 16 17 18 19 20 24 25 26 27 28 29 30 31 32 33 34 35
 MKDISK               : 11
 NAME                 : 28 29
-PATH                 : 9 10 14 15 19 20 24 25 30 31
-REP                  : 30 31
+PATH                 : 9 10 14 15 19 20 24 25 34 35
+REP                  : 34 35
 RMDISK               : 19 20
 SIZE                 : 16 26
+TYPE                 : 30
 UNIT                 : 17 27
 error                : 
 
@@ -93,8 +100,8 @@ state 0
     (19) command_rmdisk -> . RMDISK GUION PATH IGUAL CADENA
     (20) command_rmdisk -> . RMDISK GUION PATH IGUAL CADENA_SC
     (21) command_fdisk -> . FDISK params_fdisk
-    (30) command_rep -> . REP GUION PATH IGUAL CADENA
-    (31) command_rep -> . REP GUION PATH IGUAL CADENA_SC
+    (34) command_rep -> . REP GUION PATH IGUAL CADENA
+    (35) command_rep -> . REP GUION PATH IGUAL CADENA_SC
 
     EXECUTE         shift and go to state 9
     MKDISK          shift and go to state 10
@@ -132,8 +139,8 @@ state 2
     (19) command_rmdisk -> . RMDISK GUION PATH IGUAL CADENA
     (20) command_rmdisk -> . RMDISK GUION PATH IGUAL CADENA_SC
     (21) command_fdisk -> . FDISK params_fdisk
-    (30) command_rep -> . REP GUION PATH IGUAL CADENA
-    (31) command_rep -> . REP GUION PATH IGUAL CADENA_SC
+    (34) command_rep -> . REP GUION PATH IGUAL CADENA
+    (35) command_rep -> . REP GUION PATH IGUAL CADENA_SC
 
     $end            reduce using rule 1 (init -> list_commands .)
     EXECUTE         shift and go to state 9
@@ -264,6 +271,10 @@ state 12
     (27) param_fdisk -> . GUION UNIT IGUAL CADENA_SC
     (28) param_fdisk -> . GUION NAME IGUAL CADENA
     (29) param_fdisk -> . GUION NAME IGUAL CADENA_SC
+    (30) param_fdisk -> . GUION TYPE IGUAL CADENA_SC
+    (31) param_fdisk -> . GUION FIT IGUAL CADENA_SC
+    (32) param_fdisk -> . GUION DELETE IGUAL CADENA_SC
+    (33) param_fdisk -> . GUION ADD IGUAL ENTERO
 
     GUION           shift and go to state 22
 
@@ -272,8 +283,8 @@ state 12
 
 state 13
 
-    (30) command_rep -> REP . GUION PATH IGUAL CADENA
-    (31) command_rep -> REP . GUION PATH IGUAL CADENA_SC
+    (34) command_rep -> REP . GUION PATH IGUAL CADENA
+    (35) command_rep -> REP . GUION PATH IGUAL CADENA_SC
 
     GUION           shift and go to state 23
 
@@ -363,6 +374,10 @@ state 20
     (27) param_fdisk -> . GUION UNIT IGUAL CADENA_SC
     (28) param_fdisk -> . GUION NAME IGUAL CADENA
     (29) param_fdisk -> . GUION NAME IGUAL CADENA_SC
+    (30) param_fdisk -> . GUION TYPE IGUAL CADENA_SC
+    (31) param_fdisk -> . GUION FIT IGUAL CADENA_SC
+    (32) param_fdisk -> . GUION DELETE IGUAL CADENA_SC
+    (33) param_fdisk -> . GUION ADD IGUAL ENTERO
 
     EXECUTE         reduce using rule 21 (command_fdisk -> FDISK params_fdisk .)
     MKDISK          reduce using rule 21 (command_fdisk -> FDISK params_fdisk .)
@@ -395,19 +410,27 @@ state 22
     (27) param_fdisk -> GUION . UNIT IGUAL CADENA_SC
     (28) param_fdisk -> GUION . NAME IGUAL CADENA
     (29) param_fdisk -> GUION . NAME IGUAL CADENA_SC
+    (30) param_fdisk -> GUION . TYPE IGUAL CADENA_SC
+    (31) param_fdisk -> GUION . FIT IGUAL CADENA_SC
+    (32) param_fdisk -> GUION . DELETE IGUAL CADENA_SC
+    (33) param_fdisk -> GUION . ADD IGUAL ENTERO
 
     PATH            shift and go to state 32
     SIZE            shift and go to state 33
     UNIT            shift and go to state 34
     NAME            shift and go to state 35
+    TYPE            shift and go to state 36
+    FIT             shift and go to state 37
+    DELETE          shift and go to state 38
+    ADD             shift and go to state 39
 
 
 state 23
 
-    (30) command_rep -> REP GUION . PATH IGUAL CADENA
-    (31) command_rep -> REP GUION . PATH IGUAL CADENA_SC
+    (34) command_rep -> REP GUION . PATH IGUAL CADENA
+    (35) command_rep -> REP GUION . PATH IGUAL CADENA_SC
 
-    PATH            shift and go to state 36
+    PATH            shift and go to state 40
 
 
 state 24
@@ -415,7 +438,7 @@ state 24
     (9) command_execute -> EXECUTE GUION PATH . IGUAL CADENA
     (10) command_execute -> EXECUTE GUION PATH . IGUAL CADENA_SC
 
-    IGUAL           shift and go to state 37
+    IGUAL           shift and go to state 41
 
 
 state 25
@@ -436,28 +459,28 @@ state 26
     (14) param_mkdisk -> GUION PATH . IGUAL CADENA
     (15) param_mkdisk -> GUION PATH . IGUAL CADENA_SC
 
-    IGUAL           shift and go to state 38
+    IGUAL           shift and go to state 42
 
 
 state 27
 
     (16) param_mkdisk -> GUION SIZE . IGUAL ENTERO
 
-    IGUAL           shift and go to state 39
+    IGUAL           shift and go to state 43
 
 
 state 28
 
     (17) param_mkdisk -> GUION UNIT . IGUAL CADENA_SC
 
-    IGUAL           shift and go to state 40
+    IGUAL           shift and go to state 44
 
 
 state 29
 
     (18) param_mkdisk -> GUION FIT . IGUAL CADENA_SC
 
-    IGUAL           shift and go to state 41
+    IGUAL           shift and go to state 45
 
 
 state 30
@@ -465,7 +488,7 @@ state 30
     (19) command_rmdisk -> RMDISK GUION PATH . IGUAL CADENA
     (20) command_rmdisk -> RMDISK GUION PATH . IGUAL CADENA_SC
 
-    IGUAL           shift and go to state 42
+    IGUAL           shift and go to state 46
 
 
 state 31
@@ -486,21 +509,21 @@ state 32
     (24) param_fdisk -> GUION PATH . IGUAL CADENA
     (25) param_fdisk -> GUION PATH . IGUAL CADENA_SC
 
-    IGUAL           shift and go to state 43
+    IGUAL           shift and go to state 47
 
 
 state 33
 
     (26) param_fdisk -> GUION SIZE . IGUAL ENTERO
 
-    IGUAL           shift and go to state 44
+    IGUAL           shift and go to state 48
 
 
 state 34
 
     (27) param_fdisk -> GUION UNIT . IGUAL CADENA_SC
 
-    IGUAL           shift and go to state 45
+    IGUAL           shift and go to state 49
 
 
 state 35
@@ -508,107 +531,163 @@ state 35
     (28) param_fdisk -> GUION NAME . IGUAL CADENA
     (29) param_fdisk -> GUION NAME . IGUAL CADENA_SC
 
-    IGUAL           shift and go to state 46
+    IGUAL           shift and go to state 50
 
 
 state 36
 
-    (30) command_rep -> REP GUION PATH . IGUAL CADENA
-    (31) command_rep -> REP GUION PATH . IGUAL CADENA_SC
+    (30) param_fdisk -> GUION TYPE . IGUAL CADENA_SC
 
-    IGUAL           shift and go to state 47
+    IGUAL           shift and go to state 51
 
 
 state 37
 
-    (9) command_execute -> EXECUTE GUION PATH IGUAL . CADENA
-    (10) command_execute -> EXECUTE GUION PATH IGUAL . CADENA_SC
+    (31) param_fdisk -> GUION FIT . IGUAL CADENA_SC
 
-    CADENA          shift and go to state 48
-    CADENA_SC       shift and go to state 49
+    IGUAL           shift and go to state 52
 
 
 state 38
 
-    (14) param_mkdisk -> GUION PATH IGUAL . CADENA
-    (15) param_mkdisk -> GUION PATH IGUAL . CADENA_SC
+    (32) param_fdisk -> GUION DELETE . IGUAL CADENA_SC
 
-    CADENA          shift and go to state 50
-    CADENA_SC       shift and go to state 51
+    IGUAL           shift and go to state 53
 
 
 state 39
 
-    (16) param_mkdisk -> GUION SIZE IGUAL . ENTERO
+    (33) param_fdisk -> GUION ADD . IGUAL ENTERO
 
-    ENTERO          shift and go to state 52
+    IGUAL           shift and go to state 54
 
 
 state 40
 
-    (17) param_mkdisk -> GUION UNIT IGUAL . CADENA_SC
+    (34) command_rep -> REP GUION PATH . IGUAL CADENA
+    (35) command_rep -> REP GUION PATH . IGUAL CADENA_SC
 
-    CADENA_SC       shift and go to state 53
+    IGUAL           shift and go to state 55
 
 
 state 41
 
-    (18) param_mkdisk -> GUION FIT IGUAL . CADENA_SC
+    (9) command_execute -> EXECUTE GUION PATH IGUAL . CADENA
+    (10) command_execute -> EXECUTE GUION PATH IGUAL . CADENA_SC
 
-    CADENA_SC       shift and go to state 54
+    CADENA          shift and go to state 56
+    CADENA_SC       shift and go to state 57
 
 
 state 42
 
-    (19) command_rmdisk -> RMDISK GUION PATH IGUAL . CADENA
-    (20) command_rmdisk -> RMDISK GUION PATH IGUAL . CADENA_SC
+    (14) param_mkdisk -> GUION PATH IGUAL . CADENA
+    (15) param_mkdisk -> GUION PATH IGUAL . CADENA_SC
 
-    CADENA          shift and go to state 55
-    CADENA_SC       shift and go to state 56
+    CADENA          shift and go to state 58
+    CADENA_SC       shift and go to state 59
 
 
 state 43
 
-    (24) param_fdisk -> GUION PATH IGUAL . CADENA
-    (25) param_fdisk -> GUION PATH IGUAL . CADENA_SC
+    (16) param_mkdisk -> GUION SIZE IGUAL . ENTERO
 
-    CADENA          shift and go to state 57
-    CADENA_SC       shift and go to state 58
+    ENTERO          shift and go to state 60
 
 
 state 44
 
-    (26) param_fdisk -> GUION SIZE IGUAL . ENTERO
+    (17) param_mkdisk -> GUION UNIT IGUAL . CADENA_SC
 
-    ENTERO          shift and go to state 59
+    CADENA_SC       shift and go to state 61
 
 
 state 45
 
-    (27) param_fdisk -> GUION UNIT IGUAL . CADENA_SC
+    (18) param_mkdisk -> GUION FIT IGUAL . CADENA_SC
 
-    CADENA_SC       shift and go to state 60
+    CADENA_SC       shift and go to state 62
 
 
 state 46
 
-    (28) param_fdisk -> GUION NAME IGUAL . CADENA
-    (29) param_fdisk -> GUION NAME IGUAL . CADENA_SC
-
-    CADENA          shift and go to state 61
-    CADENA_SC       shift and go to state 62
-
-
-state 47
-
-    (30) command_rep -> REP GUION PATH IGUAL . CADENA
-    (31) command_rep -> REP GUION PATH IGUAL . CADENA_SC
+    (19) command_rmdisk -> RMDISK GUION PATH IGUAL . CADENA
+    (20) command_rmdisk -> RMDISK GUION PATH IGUAL . CADENA_SC
 
     CADENA          shift and go to state 63
     CADENA_SC       shift and go to state 64
 
 
+state 47
+
+    (24) param_fdisk -> GUION PATH IGUAL . CADENA
+    (25) param_fdisk -> GUION PATH IGUAL . CADENA_SC
+
+    CADENA          shift and go to state 65
+    CADENA_SC       shift and go to state 66
+
+
 state 48
+
+    (26) param_fdisk -> GUION SIZE IGUAL . ENTERO
+
+    ENTERO          shift and go to state 67
+
+
+state 49
+
+    (27) param_fdisk -> GUION UNIT IGUAL . CADENA_SC
+
+    CADENA_SC       shift and go to state 68
+
+
+state 50
+
+    (28) param_fdisk -> GUION NAME IGUAL . CADENA
+    (29) param_fdisk -> GUION NAME IGUAL . CADENA_SC
+
+    CADENA          shift and go to state 69
+    CADENA_SC       shift and go to state 70
+
+
+state 51
+
+    (30) param_fdisk -> GUION TYPE IGUAL . CADENA_SC
+
+    CADENA_SC       shift and go to state 71
+
+
+state 52
+
+    (31) param_fdisk -> GUION FIT IGUAL . CADENA_SC
+
+    CADENA_SC       shift and go to state 72
+
+
+state 53
+
+    (32) param_fdisk -> GUION DELETE IGUAL . CADENA_SC
+
+    CADENA_SC       shift and go to state 73
+
+
+state 54
+
+    (33) param_fdisk -> GUION ADD IGUAL . ENTERO
+
+    ENTERO          shift and go to state 74
+
+
+state 55
+
+    (34) command_rep -> REP GUION PATH IGUAL . CADENA
+    (35) command_rep -> REP GUION PATH IGUAL . CADENA_SC
+
+    CADENA          shift and go to state 75
+    CADENA_SC       shift and go to state 76
+
+
+state 56
 
     (9) command_execute -> EXECUTE GUION PATH IGUAL CADENA .
 
@@ -620,7 +699,7 @@ state 48
     $end            reduce using rule 9 (command_execute -> EXECUTE GUION PATH IGUAL CADENA .)
 
 
-state 49
+state 57
 
     (10) command_execute -> EXECUTE GUION PATH IGUAL CADENA_SC .
 
@@ -632,7 +711,7 @@ state 49
     $end            reduce using rule 10 (command_execute -> EXECUTE GUION PATH IGUAL CADENA_SC .)
 
 
-state 50
+state 58
 
     (14) param_mkdisk -> GUION PATH IGUAL CADENA .
 
@@ -645,7 +724,7 @@ state 50
     $end            reduce using rule 14 (param_mkdisk -> GUION PATH IGUAL CADENA .)
 
 
-state 51
+state 59
 
     (15) param_mkdisk -> GUION PATH IGUAL CADENA_SC .
 
@@ -658,7 +737,7 @@ state 51
     $end            reduce using rule 15 (param_mkdisk -> GUION PATH IGUAL CADENA_SC .)
 
 
-state 52
+state 60
 
     (16) param_mkdisk -> GUION SIZE IGUAL ENTERO .
 
@@ -671,7 +750,7 @@ state 52
     $end            reduce using rule 16 (param_mkdisk -> GUION SIZE IGUAL ENTERO .)
 
 
-state 53
+state 61
 
     (17) param_mkdisk -> GUION UNIT IGUAL CADENA_SC .
 
@@ -684,7 +763,7 @@ state 53
     $end            reduce using rule 17 (param_mkdisk -> GUION UNIT IGUAL CADENA_SC .)
 
 
-state 54
+state 62
 
     (18) param_mkdisk -> GUION FIT IGUAL CADENA_SC .
 
@@ -697,7 +776,7 @@ state 54
     $end            reduce using rule 18 (param_mkdisk -> GUION FIT IGUAL CADENA_SC .)
 
 
-state 55
+state 63
 
     (19) command_rmdisk -> RMDISK GUION PATH IGUAL CADENA .
 
@@ -709,7 +788,7 @@ state 55
     $end            reduce using rule 19 (command_rmdisk -> RMDISK GUION PATH IGUAL CADENA .)
 
 
-state 56
+state 64
 
     (20) command_rmdisk -> RMDISK GUION PATH IGUAL CADENA_SC .
 
@@ -721,7 +800,7 @@ state 56
     $end            reduce using rule 20 (command_rmdisk -> RMDISK GUION PATH IGUAL CADENA_SC .)
 
 
-state 57
+state 65
 
     (24) param_fdisk -> GUION PATH IGUAL CADENA .
 
@@ -734,7 +813,7 @@ state 57
     $end            reduce using rule 24 (param_fdisk -> GUION PATH IGUAL CADENA .)
 
 
-state 58
+state 66
 
     (25) param_fdisk -> GUION PATH IGUAL CADENA_SC .
 
@@ -747,7 +826,7 @@ state 58
     $end            reduce using rule 25 (param_fdisk -> GUION PATH IGUAL CADENA_SC .)
 
 
-state 59
+state 67
 
     (26) param_fdisk -> GUION SIZE IGUAL ENTERO .
 
@@ -760,7 +839,7 @@ state 59
     $end            reduce using rule 26 (param_fdisk -> GUION SIZE IGUAL ENTERO .)
 
 
-state 60
+state 68
 
     (27) param_fdisk -> GUION UNIT IGUAL CADENA_SC .
 
@@ -773,7 +852,7 @@ state 60
     $end            reduce using rule 27 (param_fdisk -> GUION UNIT IGUAL CADENA_SC .)
 
 
-state 61
+state 69
 
     (28) param_fdisk -> GUION NAME IGUAL CADENA .
 
@@ -786,7 +865,7 @@ state 61
     $end            reduce using rule 28 (param_fdisk -> GUION NAME IGUAL CADENA .)
 
 
-state 62
+state 70
 
     (29) param_fdisk -> GUION NAME IGUAL CADENA_SC .
 
@@ -799,26 +878,78 @@ state 62
     $end            reduce using rule 29 (param_fdisk -> GUION NAME IGUAL CADENA_SC .)
 
 
-state 63
+state 71
 
-    (30) command_rep -> REP GUION PATH IGUAL CADENA .
+    (30) param_fdisk -> GUION TYPE IGUAL CADENA_SC .
 
-    EXECUTE         reduce using rule 30 (command_rep -> REP GUION PATH IGUAL CADENA .)
-    MKDISK          reduce using rule 30 (command_rep -> REP GUION PATH IGUAL CADENA .)
-    RMDISK          reduce using rule 30 (command_rep -> REP GUION PATH IGUAL CADENA .)
-    FDISK           reduce using rule 30 (command_rep -> REP GUION PATH IGUAL CADENA .)
-    REP             reduce using rule 30 (command_rep -> REP GUION PATH IGUAL CADENA .)
-    $end            reduce using rule 30 (command_rep -> REP GUION PATH IGUAL CADENA .)
+    GUION           reduce using rule 30 (param_fdisk -> GUION TYPE IGUAL CADENA_SC .)
+    EXECUTE         reduce using rule 30 (param_fdisk -> GUION TYPE IGUAL CADENA_SC .)
+    MKDISK          reduce using rule 30 (param_fdisk -> GUION TYPE IGUAL CADENA_SC .)
+    RMDISK          reduce using rule 30 (param_fdisk -> GUION TYPE IGUAL CADENA_SC .)
+    FDISK           reduce using rule 30 (param_fdisk -> GUION TYPE IGUAL CADENA_SC .)
+    REP             reduce using rule 30 (param_fdisk -> GUION TYPE IGUAL CADENA_SC .)
+    $end            reduce using rule 30 (param_fdisk -> GUION TYPE IGUAL CADENA_SC .)
 
 
-state 64
+state 72
 
-    (31) command_rep -> REP GUION PATH IGUAL CADENA_SC .
+    (31) param_fdisk -> GUION FIT IGUAL CADENA_SC .
 
-    EXECUTE         reduce using rule 31 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
-    MKDISK          reduce using rule 31 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
-    RMDISK          reduce using rule 31 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
-    FDISK           reduce using rule 31 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
-    REP             reduce using rule 31 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
-    $end            reduce using rule 31 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
+    GUION           reduce using rule 31 (param_fdisk -> GUION FIT IGUAL CADENA_SC .)
+    EXECUTE         reduce using rule 31 (param_fdisk -> GUION FIT IGUAL CADENA_SC .)
+    MKDISK          reduce using rule 31 (param_fdisk -> GUION FIT IGUAL CADENA_SC .)
+    RMDISK          reduce using rule 31 (param_fdisk -> GUION FIT IGUAL CADENA_SC .)
+    FDISK           reduce using rule 31 (param_fdisk -> GUION FIT IGUAL CADENA_SC .)
+    REP             reduce using rule 31 (param_fdisk -> GUION FIT IGUAL CADENA_SC .)
+    $end            reduce using rule 31 (param_fdisk -> GUION FIT IGUAL CADENA_SC .)
+
+
+state 73
+
+    (32) param_fdisk -> GUION DELETE IGUAL CADENA_SC .
+
+    GUION           reduce using rule 32 (param_fdisk -> GUION DELETE IGUAL CADENA_SC .)
+    EXECUTE         reduce using rule 32 (param_fdisk -> GUION DELETE IGUAL CADENA_SC .)
+    MKDISK          reduce using rule 32 (param_fdisk -> GUION DELETE IGUAL CADENA_SC .)
+    RMDISK          reduce using rule 32 (param_fdisk -> GUION DELETE IGUAL CADENA_SC .)
+    FDISK           reduce using rule 32 (param_fdisk -> GUION DELETE IGUAL CADENA_SC .)
+    REP             reduce using rule 32 (param_fdisk -> GUION DELETE IGUAL CADENA_SC .)
+    $end            reduce using rule 32 (param_fdisk -> GUION DELETE IGUAL CADENA_SC .)
+
+
+state 74
+
+    (33) param_fdisk -> GUION ADD IGUAL ENTERO .
+
+    GUION           reduce using rule 33 (param_fdisk -> GUION ADD IGUAL ENTERO .)
+    EXECUTE         reduce using rule 33 (param_fdisk -> GUION ADD IGUAL ENTERO .)
+    MKDISK          reduce using rule 33 (param_fdisk -> GUION ADD IGUAL ENTERO .)
+    RMDISK          reduce using rule 33 (param_fdisk -> GUION ADD IGUAL ENTERO .)
+    FDISK           reduce using rule 33 (param_fdisk -> GUION ADD IGUAL ENTERO .)
+    REP             reduce using rule 33 (param_fdisk -> GUION ADD IGUAL ENTERO .)
+    $end            reduce using rule 33 (param_fdisk -> GUION ADD IGUAL ENTERO .)
+
+
+state 75
+
+    (34) command_rep -> REP GUION PATH IGUAL CADENA .
+
+    EXECUTE         reduce using rule 34 (command_rep -> REP GUION PATH IGUAL CADENA .)
+    MKDISK          reduce using rule 34 (command_rep -> REP GUION PATH IGUAL CADENA .)
+    RMDISK          reduce using rule 34 (command_rep -> REP GUION PATH IGUAL CADENA .)
+    FDISK           reduce using rule 34 (command_rep -> REP GUION PATH IGUAL CADENA .)
+    REP             reduce using rule 34 (command_rep -> REP GUION PATH IGUAL CADENA .)
+    $end            reduce using rule 34 (command_rep -> REP GUION PATH IGUAL CADENA .)
+
+
+state 76
+
+    (35) command_rep -> REP GUION PATH IGUAL CADENA_SC .
+
+    EXECUTE         reduce using rule 35 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
+    MKDISK          reduce using rule 35 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
+    RMDISK          reduce using rule 35 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
+    FDISK           reduce using rule 35 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
+    REP             reduce using rule 35 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
+    $end            reduce using rule 35 (command_rep -> REP GUION PATH IGUAL CADENA_SC .)
 

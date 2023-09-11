@@ -15,6 +15,16 @@ def Fwrite_displacement(file, displacement, obj):
         printError(f"{e}")
         return False
     
+def Fwrite_displacement_data(file, displacement, data):
+    print("Escribiendo en: ", displacement)
+    try:
+        file.seek(displacement)
+        file.write(data)
+        return True
+    except Exception as e:
+        printError(f"{e}")
+        return False
+    
 def Fread_displacement(file, displacement,obj):
     try:
         print("Leyendo en: ", displacement)
@@ -25,6 +35,7 @@ def Fread_displacement(file, displacement,obj):
         obj.doDeserialize(data)
         return obj
     except Exception as e:
+        printError(f"{e}")
         return None
 
 def Fcreate_file(file_name):

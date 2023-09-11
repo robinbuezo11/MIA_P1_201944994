@@ -117,6 +117,16 @@ def p_command_fdisk(t):
     'command_fdisk : FDISK params_fdisk'
     
     required_params = ['path', 'name']
+
+    # Check if exists more than one operation
+    op_params = ['delete', 'add']
+    op_count = 0
+    for param in op_params:
+        if param in t[2]:
+            op_count += 1
+    if op_count > 1:
+        printError(f'FDISK -> No se puede usar mas de un parametro entre {op_params}')
+        return
     
     # Search the first operation if exists
     op = None
@@ -138,7 +148,7 @@ def p_command_fdisk(t):
             return
         
     path = t[2].get('path')
-    size = t[2].get('size')
+    size = t[2].get('size', 0)
     unit = t[2].get('unit', 'k')
     name = t[2].get('name')
     type = t[2].get('type', 'p')
@@ -181,6 +191,8 @@ def p_command_fdisk(t):
     if op == 'delete':
         add = None
     elif op == 'add':
+        if add == 0:
+            printError(f'FDISK -> No se puede agregar 0')
         delete = None
     else:
         delete = None

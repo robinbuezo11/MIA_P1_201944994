@@ -13,3 +13,6 @@ def coding_str(string,size):
 
 def get_sizeB(size,unit):
     return size if unit == "b" else (size * 1024 if unit == "k" else size * 1024 * 1024 )
+
+def get_sizeM(size,unit):
+    return size if unit == "m" else (int(size/1024) if unit == "k" else int(size/1024/1024))
