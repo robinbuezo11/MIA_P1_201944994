@@ -1,4 +1,5 @@
 import os
+import struct
 from Objects.MBR import MBR
 from datetime import datetime
 from Utils.Fmanager import *
@@ -42,7 +43,11 @@ def mkdisk(path, size, unit, fit):
         printError(f'No se pudo aplicar el tamaño al disco {file_name}')
         file.close()
         return False
-
+    
+    if struct.calcsize(mbr.get_const()) > size_bytes:
+        printError(f'El tamaño del disco es muy pequeño para el MBR')
+        file.close()
+        return False
 
     print("\n***** Escribiendo MBR *****")
     if Fwrite_displacement(file, 0, mbr):
