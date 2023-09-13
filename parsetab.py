@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'ADD CADENA CADENA_SC COMMENT DELETE ENTERO EXECUTE FDISK FIT GUION IGUAL MKDISK NAME PATH REP RMDISK SIZE TYPE UNITinit : list_commandslist_commands : list_commands commands\n                    | commandscommands : command_execute\n                | command_mkdisk\n                | command_rmdisk\n                | command_fdisk\n                | command_repcommand_execute : EXECUTE GUION PATH IGUAL CADENA\n                       | EXECUTE GUION PATH IGUAL CADENA_SCcommand_mkdisk : MKDISK params_mkdiskparams_mkdisk : params_mkdisk param_mkdisk\n                    | param_mkdiskparam_mkdisk : GUION PATH IGUAL CADENA\n                    | GUION PATH IGUAL CADENA_SC\n                    | GUION SIZE IGUAL ENTERO\n                    | GUION UNIT IGUAL CADENA_SC\n                    | GUION FIT IGUAL CADENA_SCcommand_rmdisk : RMDISK GUION PATH IGUAL CADENA\n                      | RMDISK GUION PATH IGUAL CADENA_SCcommand_fdisk : FDISK params_fdiskparams_fdisk : params_fdisk param_fdisk\n                    | param_fdiskparam_fdisk : GUION PATH IGUAL CADENA\n                    | GUION PATH IGUAL CADENA_SC\n                    | GUION SIZE IGUAL ENTERO\n                    | GUION UNIT IGUAL CADENA_SC\n                    | GUION NAME IGUAL CADENA\n                    | GUION NAME IGUAL CADENA_SC\n                    | GUION TYPE IGUAL CADENA_SC\n                    | GUION FIT IGUAL CADENA_SC\n                    | GUION DELETE IGUAL CADENA_SC\n                    | GUION ADD IGUAL ENTEROcommand_rep : REP GUION PATH IGUAL CADENA\n                   | REP GUION PATH IGUAL CADENA_SC'
+_lr_signature = 'ADD CADENA CADENA_SC COMMENT DELETE ENTERO EXECUTE FDISK FIT GUION ID IGUAL MKDISK MOUNT NAME PATH PAUSE REP RMDISK SIZE TYPE UNIT UNMOUNTinit : list_commandslist_commands : list_commands commands\n                    | commandscommands : command_execute\n                | command_mkdisk\n                | command_rmdisk\n                | command_fdisk\n                | command_mount\n                | command_unmount\n\n                | command_pause\n                | command_repcommand_execute : EXECUTE GUION PATH IGUAL CADENA\n                       | EXECUTE GUION PATH IGUAL CADENA_SCcommand_mkdisk : MKDISK params_mkdiskparams_mkdisk : params_mkdisk param_mkdisk\n                    | param_mkdiskparam_mkdisk : GUION PATH IGUAL CADENA\n                    | GUION PATH IGUAL CADENA_SC\n                    | GUION SIZE IGUAL ENTERO\n                    | GUION UNIT IGUAL CADENA_SC\n                    | GUION FIT IGUAL CADENA_SCcommand_rmdisk : RMDISK GUION PATH IGUAL CADENA\n                      | RMDISK GUION PATH IGUAL CADENA_SCcommand_fdisk : FDISK params_fdiskparams_fdisk : params_fdisk param_fdisk\n                    | param_fdiskparam_fdisk : GUION PATH IGUAL CADENA\n                    | GUION PATH IGUAL CADENA_SC\n                    | GUION SIZE IGUAL ENTERO\n                    | GUION UNIT IGUAL CADENA_SC\n                    | GUION NAME IGUAL CADENA\n                    | GUION NAME IGUAL CADENA_SC\n                    | GUION TYPE IGUAL CADENA_SC\n                    | GUION FIT IGUAL CADENA_SC\n                    | GUION DELETE IGUAL CADENA_SC\n                    | GUION ADD IGUAL ENTEROcommand_mount : MOUNT params_mountparams_mount : params_mount param_mount\n                    | param_mountparam_mount : GUION PATH IGUAL CADENA\n                    | GUION PATH IGUAL CADENA_SC\n                    | GUION NAME IGUAL CADENA\n                    | GUION NAME IGUAL CADENA_SCcommand_unmount : UNMOUNT GUION ID IGUAL CADENA\n                       | UNMOUNT GUION ID IGUAL CADENA_SCcommand_pause : PAUSEcommand_rep : REP GUION PATH IGUAL CADENA\n                   | REP GUION PATH IGUAL CADENA_SC'
     
-_lr_action_items = {'EXECUTE':([0,2,3,4,5,6,7,8,14,16,17,20,21,25,31,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,],[9,9,-3,-4,-5,-6,-7,-8,-2,-11,-13,-21,-23,-12,-22,-9,-10,-14,-15,-16,-17,-18,-19,-20,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,-34,-35,]),'MKDISK':([0,2,3,4,5,6,7,8,14,16,17,20,21,25,31,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,],[10,10,-3,-4,-5,-6,-7,-8,-2,-11,-13,-21,-23,-12,-22,-9,-10,-14,-15,-16,-17,-18,-19,-20,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,-34,-35,]),'RMDISK':([0,2,3,4,5,6,7,8,14,16,17,20,21,25,31,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,],[11,11,-3,-4,-5,-6,-7,-8,-2,-11,-13,-21,-23,-12,-22,-9,-10,-14,-15,-16,-17,-18,-19,-20,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,-34,-35,]),'FDISK':([0,2,3,4,5,6,7,8,14,16,17,20,21,25,31,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,],[12,12,-3,-4,-5,-6,-7,-8,-2,-11,-13,-21,-23,-12,-22,-9,-10,-14,-15,-16,-17,-18,-19,-20,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,-34,-35,]),'REP':([0,2,3,4,5,6,7,8,14,16,17,20,21,25,31,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,],[13,13,-3,-4,-5,-6,-7,-8,-2,-11,-13,-21,-23,-12,-22,-9,-10,-14,-15,-16,-17,-18,-19,-20,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,-34,-35,]),'$end':([1,2,3,4,5,6,7,8,14,16,17,20,21,25,31,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,],[0,-1,-3,-4,-5,-6,-7,-8,-2,-11,-13,-21,-23,-12,-22,-9,-10,-14,-15,-16,-17,-18,-19,-20,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,-34,-35,]),'GUION':([9,10,11,12,13,16,17,20,21,25,31,58,59,60,61,62,65,66,67,68,69,70,71,72,73,74,],[15,18,19,22,23,18,-13,22,-23,-12,-22,-14,-15,-16,-17,-18,-24,-25,-26,-27,-28,-29,-30,-31,-32,-33,]),'PATH':([15,18,19,22,23,],[24,26,30,32,40,]),'SIZE':([18,22,],[27,33,]),'UNIT':([18,22,],[28,34,]),'FIT':([18,22,],[29,37,]),'NAME':([22,],[35,]),'TYPE':([22,],[36,]),'DELETE':([22,],[38,]),'ADD':([22,],[39,]),'IGUAL':([24,26,27,28,29,30,32,33,34,35,36,37,38,39,40,],[41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,]),'CADENA':([41,42,46,47,50,55,],[56,58,63,65,69,75,]),'CADENA_SC':([41,42,44,45,46,47,49,50,51,52,53,55,],[57,59,61,62,64,66,68,70,71,72,73,76,]),'ENTERO':([43,48,54,],[60,67,74,]),}
+_lr_action_items = {'EXECUTE':([0,2,3,4,5,6,7,8,9,10,11,18,20,22,23,26,27,29,30,35,41,50,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,],[12,12,-3,-4,-5,-6,-7,-8,-9,-10,-11,-46,-2,-14,-16,-24,-26,-37,-39,-15,-25,-38,-12,-13,-17,-18,-19,-20,-21,-22,-23,-27,-28,-29,-30,-31,-32,-33,-34,-35,-36,-40,-41,-42,-43,-44,-45,-47,-48,]),'MKDISK':([0,2,3,4,5,6,7,8,9,10,11,18,20,22,23,26,27,29,30,35,41,50,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,],[13,13,-3,-4,-5,-6,-7,-8,-9,-10,-11,-46,-2,-14,-16,-24,-26,-37,-39,-15,-25,-38,-12,-13,-17,-18,-19,-20,-21,-22,-23,-27,-28,-29,-30,-31,-32,-33,-34,-35,-36,-40,-41,-42,-43,-44,-45,-47,-48,]),'RMDISK':([0,2,3,4,5,6,7,8,9,10,11,18,20,22,23,26,27,29,30,35,41,50,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,],[14,14,-3,-4,-5,-6,-7,-8,-9,-10,-11,-46,-2,-14,-16,-24,-26,-37,-39,-15,-25,-38,-12,-13,-17,-18,-19,-20,-21,-22,-23,-27,-28,-29,-30,-31,-32,-33,-34,-35,-36,-40,-41,-42,-43,-44,-45,-47,-48,]),'FDISK':([0,2,3,4,5,6,7,8,9,10,11,18,20,22,23,26,27,29,30,35,41,50,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,],[15,15,-3,-4,-5,-6,-7,-8,-9,-10,-11,-46,-2,-14,-16,-24,-26,-37,-39,-15,-25,-38,-12,-13,-17,-18,-19,-20,-21,-22,-23,-27,-28,-29,-30,-31,-32,-33,-34,-35,-36,-40,-41,-42,-43,-44,-45,-47,-48,]),'MOUNT':([0,2,3,4,5,6,7,8,9,10,11,18,20,22,23,26,27,29,30,35,41,50,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,],[16,16,-3,-4,-5,-6,-7,-8,-9,-10,-11,-46,-2,-14,-16,-24,-26,-37,-39,-15,-25,-38,-12,-13,-17,-18,-19,-20,-21,-22,-23,-27,-28,-29,-30,-31,-32,-33,-34,-35,-36,-40,-41,-42,-43,-44,-45,-47,-48,]),'UNMOUNT':([0,2,3,4,5,6,7,8,9,10,11,18,20,22,23,26,27,29,30,35,41,50,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,],[17,17,-3,-4,-5,-6,-7,-8,-9,-10,-11,-46,-2,-14,-16,-24,-26,-37,-39,-15,-25,-38,-12,-13,-17,-18,-19,-20,-21,-22,-23,-27,-28,-29,-30,-31,-32,-33,-34,-35,-36,-40,-41,-42,-43,-44,-45,-47,-48,]),'PAUSE':([0,2,3,4,5,6,7,8,9,10,11,18,20,22,23,26,27,29,30,35,41,50,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,],[18,18,-3,-4,-5,-6,-7,-8,-9,-10,-11,-46,-2,-14,-16,-24,-26,-37,-39,-15,-25,-38,-12,-13,-17,-18,-19,-20,-21,-22,-23,-27,-28,-29,-30,-31,-32,-33,-34,-35,-36,-40,-41,-42,-43,-44,-45,-47,-48,]),'REP':([0,2,3,4,5,6,7,8,9,10,11,18,20,22,23,26,27,29,30,35,41,50,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,],[19,19,-3,-4,-5,-6,-7,-8,-9,-10,-11,-46,-2,-14,-16,-24,-26,-37,-39,-15,-25,-38,-12,-13,-17,-18,-19,-20,-21,-22,-23,-27,-28,-29,-30,-31,-32,-33,-34,-35,-36,-40,-41,-42,-43,-44,-45,-47,-48,]),'$end':([1,2,3,4,5,6,7,8,9,10,11,18,20,22,23,26,27,29,30,35,41,50,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,],[0,-1,-3,-4,-5,-6,-7,-8,-9,-10,-11,-46,-2,-14,-16,-24,-26,-37,-39,-15,-25,-38,-12,-13,-17,-18,-19,-20,-21,-22,-23,-27,-28,-29,-30,-31,-32,-33,-34,-35,-36,-40,-41,-42,-43,-44,-45,-47,-48,]),'GUION':([12,13,14,15,16,17,19,22,23,26,27,29,30,35,41,50,75,76,77,78,79,82,83,84,85,86,87,88,89,90,91,92,93,94,95,],[21,24,25,28,31,32,33,24,-16,28,-26,31,-39,-15,-25,-38,-17,-18,-19,-20,-21,-27,-28,-29,-30,-31,-32,-33,-34,-35,-36,-40,-41,-42,-43,]),'PATH':([21,24,25,28,31,33,],[34,36,40,42,51,54,]),'SIZE':([24,28,],[37,43,]),'UNIT':([24,28,],[38,44,]),'FIT':([24,28,],[39,47,]),'NAME':([28,31,],[45,52,]),'TYPE':([28,],[46,]),'DELETE':([28,],[48,]),'ADD':([28,],[49,]),'ID':([32,],[53,]),'IGUAL':([34,36,37,38,39,40,42,43,44,45,46,47,48,49,51,52,53,54,],[55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,]),'CADENA':([55,56,60,61,64,69,70,71,72,],[73,75,80,82,86,92,94,96,98,]),'CADENA_SC':([55,56,58,59,60,61,63,64,65,66,67,69,70,71,72,],[74,76,78,79,81,83,85,87,88,89,90,93,95,97,99,]),'ENTERO':([57,62,68,],[77,84,91,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'init':([0,],[1,]),'list_commands':([0,],[2,]),'commands':([0,2,],[3,14,]),'command_execute':([0,2,],[4,4,]),'command_mkdisk':([0,2,],[5,5,]),'command_rmdisk':([0,2,],[6,6,]),'command_fdisk':([0,2,],[7,7,]),'command_rep':([0,2,],[8,8,]),'params_mkdisk':([10,],[16,]),'param_mkdisk':([10,16,],[17,25,]),'params_fdisk':([12,],[20,]),'param_fdisk':([12,20,],[21,31,]),}
+_lr_goto_items = {'init':([0,],[1,]),'list_commands':([0,],[2,]),'commands':([0,2,],[3,20,]),'command_execute':([0,2,],[4,4,]),'command_mkdisk':([0,2,],[5,5,]),'command_rmdisk':([0,2,],[6,6,]),'command_fdisk':([0,2,],[7,7,]),'command_mount':([0,2,],[8,8,]),'command_unmount':([0,2,],[9,9,]),'command_pause':([0,2,],[10,10,]),'command_rep':([0,2,],[11,11,]),'params_mkdisk':([13,],[22,]),'param_mkdisk':([13,22,],[23,35,]),'params_fdisk':([15,],[26,]),'param_fdisk':([15,26,],[27,41,]),'params_mount':([16,],[29,]),'param_mount':([16,29,],[30,50,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,39 +27,52 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> init","S'",1,None,None,None),
-  ('init -> list_commands','init',1,'p_init','parser_.py',12),
-  ('list_commands -> list_commands commands','list_commands',2,'p_list_commands','parser_.py',15),
-  ('list_commands -> commands','list_commands',1,'p_list_commands','parser_.py',16),
-  ('commands -> command_execute','commands',1,'p_commands','parser_.py',19),
-  ('commands -> command_mkdisk','commands',1,'p_commands','parser_.py',20),
-  ('commands -> command_rmdisk','commands',1,'p_commands','parser_.py',21),
-  ('commands -> command_fdisk','commands',1,'p_commands','parser_.py',22),
-  ('commands -> command_rep','commands',1,'p_commands','parser_.py',23),
-  ('command_execute -> EXECUTE GUION PATH IGUAL CADENA','command_execute',5,'p_command_execute','parser_.py',29),
-  ('command_execute -> EXECUTE GUION PATH IGUAL CADENA_SC','command_execute',5,'p_command_execute','parser_.py',30),
-  ('command_mkdisk -> MKDISK params_mkdisk','command_mkdisk',2,'p_command_mkdisk','parser_.py',46),
-  ('params_mkdisk -> params_mkdisk param_mkdisk','params_mkdisk',2,'p_params_mkdisk','parser_.py',91),
-  ('params_mkdisk -> param_mkdisk','params_mkdisk',1,'p_params_mkdisk','parser_.py',92),
-  ('param_mkdisk -> GUION PATH IGUAL CADENA','param_mkdisk',4,'p_param_mkdisk','parser_.py',100),
-  ('param_mkdisk -> GUION PATH IGUAL CADENA_SC','param_mkdisk',4,'p_param_mkdisk','parser_.py',101),
-  ('param_mkdisk -> GUION SIZE IGUAL ENTERO','param_mkdisk',4,'p_param_mkdisk','parser_.py',102),
-  ('param_mkdisk -> GUION UNIT IGUAL CADENA_SC','param_mkdisk',4,'p_param_mkdisk','parser_.py',103),
-  ('param_mkdisk -> GUION FIT IGUAL CADENA_SC','param_mkdisk',4,'p_param_mkdisk','parser_.py',104),
-  ('command_rmdisk -> RMDISK GUION PATH IGUAL CADENA','command_rmdisk',5,'p_command_rmdisk','parser_.py',110),
-  ('command_rmdisk -> RMDISK GUION PATH IGUAL CADENA_SC','command_rmdisk',5,'p_command_rmdisk','parser_.py',111),
-  ('command_fdisk -> FDISK params_fdisk','command_fdisk',2,'p_command_fdisk','parser_.py',123),
-  ('params_fdisk -> params_fdisk param_fdisk','params_fdisk',2,'p_params_fdisk','parser_.py',213),
-  ('params_fdisk -> param_fdisk','params_fdisk',1,'p_params_fdisk','parser_.py',214),
-  ('param_fdisk -> GUION PATH IGUAL CADENA','param_fdisk',4,'p_param_fdisk','parser_.py',222),
-  ('param_fdisk -> GUION PATH IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',223),
-  ('param_fdisk -> GUION SIZE IGUAL ENTERO','param_fdisk',4,'p_param_fdisk','parser_.py',224),
-  ('param_fdisk -> GUION UNIT IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',225),
-  ('param_fdisk -> GUION NAME IGUAL CADENA','param_fdisk',4,'p_param_fdisk','parser_.py',226),
-  ('param_fdisk -> GUION NAME IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',227),
-  ('param_fdisk -> GUION TYPE IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',228),
-  ('param_fdisk -> GUION FIT IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',229),
-  ('param_fdisk -> GUION DELETE IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',230),
-  ('param_fdisk -> GUION ADD IGUAL ENTERO','param_fdisk',4,'p_param_fdisk','parser_.py',231),
-  ('command_rep -> REP GUION PATH IGUAL CADENA','command_rep',5,'p_command_rep','parser_.py',238),
-  ('command_rep -> REP GUION PATH IGUAL CADENA_SC','command_rep',5,'p_command_rep','parser_.py',239),
+  ('init -> list_commands','init',1,'p_init','parser_.py',15),
+  ('list_commands -> list_commands commands','list_commands',2,'p_list_commands','parser_.py',18),
+  ('list_commands -> commands','list_commands',1,'p_list_commands','parser_.py',19),
+  ('commands -> command_execute','commands',1,'p_commands','parser_.py',22),
+  ('commands -> command_mkdisk','commands',1,'p_commands','parser_.py',23),
+  ('commands -> command_rmdisk','commands',1,'p_commands','parser_.py',24),
+  ('commands -> command_fdisk','commands',1,'p_commands','parser_.py',25),
+  ('commands -> command_mount','commands',1,'p_commands','parser_.py',26),
+  ('commands -> command_unmount','commands',1,'p_commands','parser_.py',27),
+  ('commands -> command_pause','commands',1,'p_commands','parser_.py',29),
+  ('commands -> command_rep','commands',1,'p_commands','parser_.py',30),
+  ('command_execute -> EXECUTE GUION PATH IGUAL CADENA','command_execute',5,'p_command_execute','parser_.py',35),
+  ('command_execute -> EXECUTE GUION PATH IGUAL CADENA_SC','command_execute',5,'p_command_execute','parser_.py',36),
+  ('command_mkdisk -> MKDISK params_mkdisk','command_mkdisk',2,'p_command_mkdisk','parser_.py',51),
+  ('params_mkdisk -> params_mkdisk param_mkdisk','params_mkdisk',2,'p_params_mkdisk','parser_.py',90),
+  ('params_mkdisk -> param_mkdisk','params_mkdisk',1,'p_params_mkdisk','parser_.py',91),
+  ('param_mkdisk -> GUION PATH IGUAL CADENA','param_mkdisk',4,'p_param_mkdisk','parser_.py',99),
+  ('param_mkdisk -> GUION PATH IGUAL CADENA_SC','param_mkdisk',4,'p_param_mkdisk','parser_.py',100),
+  ('param_mkdisk -> GUION SIZE IGUAL ENTERO','param_mkdisk',4,'p_param_mkdisk','parser_.py',101),
+  ('param_mkdisk -> GUION UNIT IGUAL CADENA_SC','param_mkdisk',4,'p_param_mkdisk','parser_.py',102),
+  ('param_mkdisk -> GUION FIT IGUAL CADENA_SC','param_mkdisk',4,'p_param_mkdisk','parser_.py',103),
+  ('command_rmdisk -> RMDISK GUION PATH IGUAL CADENA','command_rmdisk',5,'p_command_rmdisk','parser_.py',109),
+  ('command_rmdisk -> RMDISK GUION PATH IGUAL CADENA_SC','command_rmdisk',5,'p_command_rmdisk','parser_.py',110),
+  ('command_fdisk -> FDISK params_fdisk','command_fdisk',2,'p_command_fdisk','parser_.py',121),
+  ('params_fdisk -> params_fdisk param_fdisk','params_fdisk',2,'p_params_fdisk','parser_.py',208),
+  ('params_fdisk -> param_fdisk','params_fdisk',1,'p_params_fdisk','parser_.py',209),
+  ('param_fdisk -> GUION PATH IGUAL CADENA','param_fdisk',4,'p_param_fdisk','parser_.py',217),
+  ('param_fdisk -> GUION PATH IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',218),
+  ('param_fdisk -> GUION SIZE IGUAL ENTERO','param_fdisk',4,'p_param_fdisk','parser_.py',219),
+  ('param_fdisk -> GUION UNIT IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',220),
+  ('param_fdisk -> GUION NAME IGUAL CADENA','param_fdisk',4,'p_param_fdisk','parser_.py',221),
+  ('param_fdisk -> GUION NAME IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',222),
+  ('param_fdisk -> GUION TYPE IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',223),
+  ('param_fdisk -> GUION FIT IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',224),
+  ('param_fdisk -> GUION DELETE IGUAL CADENA_SC','param_fdisk',4,'p_param_fdisk','parser_.py',225),
+  ('param_fdisk -> GUION ADD IGUAL ENTERO','param_fdisk',4,'p_param_fdisk','parser_.py',226),
+  ('command_mount -> MOUNT params_mount','command_mount',2,'p_command_mount','parser_.py',232),
+  ('params_mount -> params_mount param_mount','params_mount',2,'p_params_mount','parser_.py',251),
+  ('params_mount -> param_mount','params_mount',1,'p_params_mount','parser_.py',252),
+  ('param_mount -> GUION PATH IGUAL CADENA','param_mount',4,'p_param_mount','parser_.py',260),
+  ('param_mount -> GUION PATH IGUAL CADENA_SC','param_mount',4,'p_param_mount','parser_.py',261),
+  ('param_mount -> GUION NAME IGUAL CADENA','param_mount',4,'p_param_mount','parser_.py',262),
+  ('param_mount -> GUION NAME IGUAL CADENA_SC','param_mount',4,'p_param_mount','parser_.py',263),
+  ('command_unmount -> UNMOUNT GUION ID IGUAL CADENA','command_unmount',5,'p_command_unmount','parser_.py',269),
+  ('command_unmount -> UNMOUNT GUION ID IGUAL CADENA_SC','command_unmount',5,'p_command_unmount','parser_.py',270),
+  ('command_pause -> PAUSE','command_pause',1,'p_command_pause','parser_.py',276),
+  ('command_rep -> REP GUION PATH IGUAL CADENA','command_rep',5,'p_command_rep','parser_.py',282),
+  ('command_rep -> REP GUION PATH IGUAL CADENA_SC','command_rep',5,'p_command_rep','parser_.py',283),
 ]

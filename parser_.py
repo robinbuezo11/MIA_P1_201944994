@@ -6,6 +6,9 @@ from Commands.Rmdisk import *
 from Commands.Fdisk import *
 from Commands.Execute import *
 from Commands.Rep import *
+from Commands.Mount import *
+from Commands.Unmount import *
+from Commands.Pause import *
 
 # Grammar rules
 def p_init(t):
@@ -20,11 +23,14 @@ def p_commands(t):
                 | command_mkdisk
                 | command_rmdisk
                 | command_fdisk
+                | command_mount
+                | command_unmount
+
+                | command_pause
                 | command_rep'''
 
 #------------------------------------------------------------
 #------------------------ EXECUTE ---------------------------
-
 def p_command_execute(t):
     '''command_execute : EXECUTE GUION PATH IGUAL CADENA
                        | EXECUTE GUION PATH IGUAL CADENA_SC'''
@@ -41,7 +47,6 @@ def p_command_execute(t):
 
 #------------------------------------------------------------
 #------------------------ MKDISK ----------------------------
-
 def p_command_mkdisk(t):                                       
     'command_mkdisk : MKDISK params_mkdisk'
 
@@ -112,7 +117,6 @@ def p_command_rmdisk(t):
 
 #------------------------------------------------------------
 #------------------------ FDISK -----------------------------
-
 def p_command_fdisk(t):
     'command_fdisk : FDISK params_fdisk'
     
@@ -223,8 +227,57 @@ def p_param_fdisk(t):
     t[0] = {t[2]: t[4]}
 
 #------------------------------------------------------------
-#------------------------ REP -------------------------------
+#------------------------ MOUNT -----------------------------
+def p_command_mount(t):
+    'command_mount : MOUNT params_mount'
+    
+    required_params = ['path', 'name']
 
+    for param in required_params:
+        if param not in t[2]:
+            printError(f'MOUNT -> Parametro {param} requerido')
+            return
+        
+    path = t[2].get('path')
+    name = t[2].get('name')
+
+    if path[-3:] != 'dsk':
+        printError(f'MOUNT -> La extension del archivo {path} debe ser .dsk')
+        return
+    
+    mount(path, name)
+
+def p_params_mount(t):
+    '''params_mount : params_mount param_mount
+                    | param_mount'''
+    if len(t) != 2:
+        t[1].update(t[2])
+        t[0] = t[1]
+    else:
+        t[0] = t[1]
+
+def p_param_mount(t):
+    '''param_mount : GUION PATH IGUAL CADENA
+                    | GUION PATH IGUAL CADENA_SC
+                    | GUION NAME IGUAL CADENA
+                    | GUION NAME IGUAL CADENA_SC'''
+    t[0] = {t[2]: t[4]}
+
+#------------------------------------------------------------
+#------------------------ UNMOUNT ---------------------------
+def p_command_unmount(t):
+    '''command_unmount : UNMOUNT GUION ID IGUAL CADENA
+                       | UNMOUNT GUION ID IGUAL CADENA_SC'''
+    unmount(t[5])
+
+#------------------------------------------------------------
+#------------------------ PAUSE -----------------------------
+def p_command_pause(t):
+    'command_pause : PAUSE'
+    pause()
+
+#------------------------------------------------------------
+#------------------------ REP -------------------------------
 def p_command_rep(t):
     '''command_rep : REP GUION PATH IGUAL CADENA
                    | REP GUION PATH IGUAL CADENA_SC'''

@@ -25,6 +25,12 @@ class MBR(ctypes.Structure):
 
     def get_const(self):
         return const
+    
+    def get_partitionbyName(self, name):
+        for partition in self.partitions:
+            if partition.part_name.decode() == name:
+                return partition
+        return None
 
     def _set_mbr_tamano(self, mbr_tamano):
         self.mbr_tamano = mbr_tamano

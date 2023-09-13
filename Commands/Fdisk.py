@@ -7,15 +7,14 @@ from Objects.EBR import EBR
 def fdisk(path, size, unit, name, type, fit, delete, add):
     printConsole('Ejecutando el comando FDISK')
     print("***** Abriendo Disco *****")
-
     try:
         file = open(path, "rb+")
     except Exception as e:
         printError(f"Error al abrir el disco: {e}")
         return False
     
-    mbr = MBR()
     print("\n***** Leyendo MBR *****")
+    mbr = MBR()
     mbr = Fread_displacement(file, 0, mbr)
     if not mbr:
         printError("No se pudo leer el MBR")
