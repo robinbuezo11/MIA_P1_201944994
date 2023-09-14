@@ -77,3 +77,26 @@ class EBR(ctypes.Structure):
     def doDeserialize(self, data):
         self.part_status, self.part_fit, self.part_start, self.part_s, self.part_next, self.part_name = struct.unpack(const, data)
 
+    def generate_report_mbr(self):
+        return '''
+        <tr>
+            <td bgcolor="#5bff33"><b>Particion Logica</b></td>
+        </tr>
+        <tr>
+            <td><b>part_status</b> '''+self.part_status.decode().upper()+'''</td>
+        </tr>
+        <tr>
+            <td><b>part_fit</b> '''+self.part_fit.decode().upper()+'''</td>
+        </tr>
+        <tr>
+            <td><b>part_start</b> '''+str(self.part_start)+'''</td>
+        </tr>
+        <tr>
+            <td><b>part_size</b> '''+str(self.part_s)+'''</td>
+        </tr>
+        <tr>
+            <td><b>part_next</b> '''+str(self.part_next)+'''</td>
+        </tr>
+        <tr>
+            <td><b>part_name</b> '''+self.part_name.decode().upper()+'''</td>
+        </tr>'''

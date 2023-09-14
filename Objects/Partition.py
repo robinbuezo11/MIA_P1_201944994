@@ -1,6 +1,8 @@
 import ctypes
 import struct
 from Utils.Utilities import coding_str
+from Objects.EBR import EBR
+from Utils.Fmanager import *
 
 const = 'sssii16s' 
 
@@ -74,3 +76,66 @@ class Partition(ctypes.Structure):
     def doDeserialize(self, data):
         self.part_status, self.part_type, self.part_fit, self.part_start, self.part_s, self.part_name = struct.unpack(const, data)
 
+    def generate_report_mbr(self, file):
+        code = '''
+            <tr>
+                <td bgcolor="#3371ff"<b>MBR</b></td>
+            <tr>
+                <td><b>part_status</b> ''' + self.part_status.decode().upper() + '''</td>
+            </tr>
+            <tr>
+                <td><b>part_type</b> ''' + self.part_type.decode().upper() + '''</td>
+            </tr>
+            <tr>
+                <td><b>part_fit</b> ''' + self.part_fit.decode().upper() + '''</td>
+            </tr>
+            <tr>
+                <td><b>part_start</b> ''' + str(self.part_start) + '''</td>
+            </tr>
+            <tr>
+                <td><b>part_size</b> ''' + str(self.part_s) + '''</td>
+            </tr>
+            <tr>
+                <td><b>part_name</b> ''' + self.part_name.decode().upper() + '''</td>
+            </tr>
+            '''
+        if self.part_type.decode() == 'e':
+            ebr = EBR()
+            if not Fread_displacement(file, self.part_start, ebr):
+                printError(f'No se pudo leer el EBR del disco {file.name}')
+                return code
+            if ebr.part_s != -1:
+                code += ebr.generate_report_mbr()
+            while ebr.part_next != -1:
+                if not Fread_displacement(file, ebr.part_next, ebr):
+                    printError(f'No se pudo leer el EBR del disco {file.name}')
+                    return code
+                if ebr.part_s != -1:
+                    code += ebr.generate_report_mbr()
+        return code
+    
+    def generate_report_disk(self, file, size_disk):
+        if self.part_type.decode() == 'e':
+            ebr = EBR()
+            if not Fread_displacement(file, self.part_start, ebr):
+                printError(f'No se pudo leer el EBR del disco {file.name}')
+                return ''
+            end_used = 0
+            code = '''|{Extendida|{'''
+            while ebr.part_next != -1:
+                if end_used != ebr.part_start-struct.calcsize(ebr.get_const()):
+                    code += f'|Libre\\n{(((ebr.part_start-struct.calcsize(ebr.get_const())) - end_used)/size_disk)*100}% del disco'
+                code += f'|EBR|Lógica\\n{((ebr.part_s)/size_disk)*100}% del disco'
+                end_used = ebr.part_start + ebr.part_s
+
+                if not Fread_displacement(file, ebr.part_next, ebr):
+                    printError(f'No se pudo leer el EBR del disco {file.name}')
+                    return ''
+                
+            if end_used != self.part_s:
+                code += f'|Libre\\n{((self.part_s - end_used)/size_disk)*100}% del disco'
+            code += '''}}'''
+            return code
+        else:
+            code = f'|Primaria\\n{((self.part_s)/size_disk)*100}% del disco'
+            return code

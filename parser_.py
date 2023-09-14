@@ -27,7 +27,8 @@ def p_commands(t):
                 | command_unmount
 
                 | command_pause
-                | command_rep'''
+                | command_rep
+                | COMMENT'''
 
 #------------------------------------------------------------
 #------------------------ EXECUTE ---------------------------
@@ -279,10 +280,54 @@ def p_command_pause(t):
 #------------------------------------------------------------
 #------------------------ REP -------------------------------
 def p_command_rep(t):
-    '''command_rep : REP GUION PATH IGUAL CADENA
-                   | REP GUION PATH IGUAL CADENA_SC'''
-    rep(t[5])
+    '''command_rep : REP params_rep'''
 
+    required_params = ['name', 'path', 'id']
+
+    name = t[2].get('name')
+    path = t[2].get('path')
+    id = t[2].get('id')
+    ruta = t[2].get('ruta', None)
+
+    if name in ['file', 'ls']:
+        required_params.append('ruta')
+
+    for param in required_params:
+        if param not in t[2]:
+            printError(f'REP -> Parametro {param} requerido')
+            return
+
+    if name not in ['mbr', 'disk', 'inode', 'journaling', 'block', 'bm_inode', 'bm_block', 'tree', 'sb', 'file', 'ls']:
+        try:
+            printError(f'REP -> Reporte {str(name).upper()} no reconocido')
+        except:
+            printError(f'REP -> Reporte {name} no reconocido')
+        return
+    
+    if path[-3:] not in ['png', 'jpg', 'pdf']:
+        printError(f'REP -> La extension del archivo {path} debe ser .png, .jpg o .pdf')
+        return
+    
+    rep(name, path, id, ruta)
+
+def p_params_rep(t):
+    '''params_rep : params_rep param_rep
+                    | param_rep'''
+    if len(t) != 2:
+        t[1].update(t[2])
+        t[0] = t[1]
+    else:
+        t[0] = t[1]
+
+def p_param_rep(t):
+    '''param_rep : GUION NAME IGUAL CADENA_SC
+                    | GUION PATH IGUAL CADENA
+                    | GUION PATH IGUAL CADENA_SC
+                    | GUION ID IGUAL CADENA
+                    | GUION ID IGUAL CADENA_SC
+                    | GUION RUTA IGUAL CADENA
+                    | GUION RUTA IGUAL CADENA_SC'''
+    t[0] = {t[2]: t[4]}
 
 # Error rule for syntax errors
 def p_error(t):

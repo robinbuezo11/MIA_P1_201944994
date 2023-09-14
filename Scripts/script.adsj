@@ -19,3 +19,5 @@
 #Se genera el reporte de las particiones
     rep -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk"
 #   fdisk -add=-2047 -unit=K -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Archivos/Disco1.dsk" -name=Particion3
+
+# execute -path="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/Archivos para Calificación/basico.mia"

@@ -26,6 +26,7 @@ reserved = {
     'delete' : 'DELETE',
     'add' : 'ADD',
     'id' : 'ID',
+    'ruta' : 'RUTA',
 }
 
 # List of global token names.   This is always required
@@ -45,6 +46,11 @@ t_GUION = r'\-'
 # Regular expression rules with some action code
 #   All values are returned as strings
 
+def t_ENTERO(t):
+    r'-?\d+\b'
+    t.value = int(t.value)
+    return t
+
 def t_CADENA(t):
     r'\"(.|\n)*?\"'
     t.value = t.value[1:-1] # remuevo las comillas
@@ -54,11 +60,6 @@ def t_CADENA_SC(t):
     r'[a-zA-Z0-9_/.,:][a-zA-Z0-9_/.,:]*'
     t.value = t.value.lower()
     t.type = reserved.get(t.value, 'CADENA_SC') # Check for reserved words
-    return t
-
-def t_ENTERO(t):
-    r'-?\d+'
-    t.value = int(t.value)
     return t
 
 def t_COMMENT(t):
