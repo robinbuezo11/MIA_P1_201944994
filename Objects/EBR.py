@@ -83,20 +83,20 @@ class EBR(ctypes.Structure):
             <td bgcolor="#5bff33"><b>Particion Logica</b></td>
         </tr>
         <tr>
-            <td><b>part_status</b> '''+self.part_status.decode().upper()+'''</td>
+            <td><b>part_status      </b> '''+self.part_status.decode().upper()+'''</td>
         </tr>
         <tr>
-            <td><b>part_fit</b> '''+self.part_fit.decode().upper()+'''</td>
+            <td><b>part_fit      </b> '''+self.part_fit.decode().upper()+'''</td>
         </tr>
         <tr>
-            <td><b>part_start</b> '''+str(self.part_start)+'''</td>
+            <td><b>part_start      </b> '''+str(self.part_start)+'''</td>
         </tr>
         <tr>
-            <td><b>part_size</b> '''+str(self.part_s)+'''</td>
+            <td><b>part_size      </b> '''+str(self.part_s)+'''</td>
         </tr>
         <tr>
-            <td><b>part_next</b> '''+str(self.part_next)+'''</td>
+            <td><b>part_next      </b> '''+str(self.part_next)+'''</td>
         </tr>
         <tr>
-            <td><b>part_name</b> '''+self.part_name.decode().upper()+'''</td>
+            <td><b>part_name      </b> '''+self.part_name.decode().upper()+'''</td>
         </tr>'''

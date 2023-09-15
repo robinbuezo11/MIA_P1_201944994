@@ -29,7 +29,7 @@ def rep(name, path, id, ruta):
     
     # We have to check the type of report to generate in base of the name
     print('\n***** Generando el reporte *****')
-    if name == 'mrb':
+    if name == 'mbr':
         code = mbr.generate_report_mbr(file)
 
         if not execute_graphviz(code, path):

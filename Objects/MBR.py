@@ -131,21 +131,21 @@ class MBR(ctypes.Structure):
             code = '''
             digraph G {
                 node [shape=plain style=filled pencolor=black fontname="Helvetica, Arial, sans-serif"]
-                mbr [label=<<table cellspacing="0" cellpadding="20">
+                mbr [label=<<table cellspacing="0" cellpadding="2">
                     <tr>
-                        <td bgcolor="#3371ff"<b>MBR</b></td>
+                        <td bgcolor="#3371ff"><b>MBR</b></td>
                     </tr>
                     <tr>
-                        <td><b>mbr_tamano</b> '''+str(self.mbr_tamano)+'''</td>
+                        <td><b>mbr_tamano      </b> '''+str(self.mbr_tamano)+'''</td>
                     </tr>
                     <tr>
-                        <td><b>mbr_fecha_creacion</b> '''+self.mbr_fecha_creacion.decode()+'''</td>
+                        <td><b>mbr_fecha_creacion      </b> '''+self.mbr_fecha_creacion.decode()+'''</td>
                     </tr>
                     <tr>
-                        <td><b>mbr_dsk_signature</b> '''+str(self.mbr_dsk_signature)+'''</td>
+                        <td><b>mbr_dsk_signature      </b> '''+str(self.mbr_dsk_signature)+'''</td>
                     </tr>
                     <tr>
-                        <td><b>dsk_fit</b> '''+self.dsk_fit.decode()+'''</td>
+                        <td><b>dsk_fit      </b> '''+self.dsk_fit.decode().upper()+'''</td>
                     </tr>'''
             for i in range(4):
                 code += self.partitions[i].generate_report_mbr(file)
@@ -162,17 +162,17 @@ class MBR(ctypes.Structure):
             code = '''
             digraph G {
                 bgcolor="#3371ff" node [style=filled shape=record]
-                disk [label="{''' + disk_name.upper() + '''{MBR'''
+                disk [label="{''' + disk_name.upper() + '''|{MBR'''
             
-            end_used = struct.calcsize(self.get_const())
+            end_used = len(self.doSerialize())
             for partition in self.partitions:
                 if partition.part_s != -1:
                     if end_used != partition.part_start:
-                        code += f'|Libre\\n{((partition.part_start - end_used)/self.mbr_tamano)*100}% del disco'
+                        code += f'|Libre\\n{(((partition.part_start - end_used)/self.mbr_tamano)*100):.2f}% del disco'
                     code += partition.generate_report_disk(file, self.mbr_tamano)
                     end_used = partition.part_start + partition.part_s
             if end_used != self.mbr_tamano:
-                code += f'|Libre\\n{((self.mbr_tamano - end_used)/self.mbr_tamano)*100}% del disco'
+                code += f'|Libre\\n{(((self.mbr_tamano - end_used)/self.mbr_tamano)*100):.2f}% del disco'
             code += '''}}"];
             }'''
         except Exception as e:

@@ -79,24 +79,25 @@ class Partition(ctypes.Structure):
     def generate_report_mbr(self, file):
         code = '''
             <tr>
-                <td bgcolor="#3371ff"<b>MBR</b></td>
-            <tr>
-                <td><b>part_status</b> ''' + self.part_status.decode().upper() + '''</td>
+                <td bgcolor="#3371ff"><b>MBR</b></td>
             </tr>
             <tr>
-                <td><b>part_type</b> ''' + self.part_type.decode().upper() + '''</td>
+                <td><b>part_status      </b> ''' + self.part_status.decode().upper() + '''</td>
             </tr>
             <tr>
-                <td><b>part_fit</b> ''' + self.part_fit.decode().upper() + '''</td>
+                <td><b>part_type      </b> ''' + self.part_type.decode().upper() + '''</td>
             </tr>
             <tr>
-                <td><b>part_start</b> ''' + str(self.part_start) + '''</td>
+                <td><b>part_fit      </b> ''' + self.part_fit.decode().upper() + '''</td>
             </tr>
             <tr>
-                <td><b>part_size</b> ''' + str(self.part_s) + '''</td>
+                <td><b>part_start      </b> ''' + str(self.part_start) + '''</td>
             </tr>
             <tr>
-                <td><b>part_name</b> ''' + self.part_name.decode().upper() + '''</td>
+                <td><b>part_size      </b> ''' + str(self.part_s) + '''</td>
+            </tr>
+            <tr>
+                <td><b>part_name      </b> ''' + self.part_name.decode().upper() + '''</td>
             </tr>
             '''
         if self.part_type.decode() == 'e':
@@ -124,8 +125,8 @@ class Partition(ctypes.Structure):
             code = '''|{Extendida|{'''
             while ebr.part_next != -1:
                 if end_used != ebr.part_start-struct.calcsize(ebr.get_const()):
-                    code += f'|Libre\\n{(((ebr.part_start-struct.calcsize(ebr.get_const())) - end_used)/size_disk)*100}% del disco'
-                code += f'|EBR|Lógica\\n{((ebr.part_s)/size_disk)*100}% del disco'
+                    code += f'|Libre\\n{((((ebr.part_start-struct.calcsize(ebr.get_const())) - end_used)/size_disk)*100):.2f}% del disco'
+                code += f'|EBR|Lógica\\n{(((ebr.part_s)/size_disk)*100):.2f}% del disco'
                 end_used = ebr.part_start + ebr.part_s
 
                 if not Fread_displacement(file, ebr.part_next, ebr):
@@ -133,9 +134,9 @@ class Partition(ctypes.Structure):
                     return ''
                 
             if end_used != self.part_s:
-                code += f'|Libre\\n{((self.part_s - end_used)/size_disk)*100}% del disco'
+                code += f'|Libre\\n{(((self.part_s - end_used)/size_disk)*100):.2f}% del disco'
             code += '''}}'''
             return code
         else:
-            code = f'|Primaria\\n{((self.part_s)/size_disk)*100}% del disco'
+            code = f'|Primaria\\n{(((self.part_s)/size_disk)*100):.2f}% del disco'
             return code

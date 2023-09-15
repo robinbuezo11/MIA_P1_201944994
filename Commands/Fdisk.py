@@ -1,4 +1,5 @@
 import struct
+import copy
 from Utils.Fmanager import *
 from Objects.Partition import Partition
 from Objects.MBR import MBR
@@ -239,13 +240,13 @@ def fdisk(path, size, unit, name, type, fit, delete, add):
                 file.close()
                 return False
             # Validations of the name
-            ebraux = ebr
+            ebraux = copy.deepcopy(ebr)
             while ebraux.part_next != -1:
                 if ebraux.part_name.decode() == name:
                     printError(f"Ya existe una partición con el nombre {name.upper()}")
                     file.close()
                     return False
-                ebraux = Fread_displacement(file, ebraux.part_next, ebr)
+                ebraux = Fread_displacement(file, ebraux.part_next, ebraux)
                 if not ebraux:
                     printError("No se pudo leer el EBR")
                     file.close()
@@ -258,54 +259,63 @@ def fdisk(path, size, unit, name, type, fit, delete, add):
             # Here we have to search a space to create the partition
             foundSpace = False
             ebrsize = struct.calcsize(EBR().get_const())
-            ebraux = ebr
+            ebraux = copy.deepcopy(ebr)
             while ebraux.part_next != -1:
                 if ebraux.part_next - (ebraux.part_start + ebraux.part_s) >= ebrsize + size_bytes:
+                    ebr.set_info('n', fit, ebraux.part_start + ebraux.part_s + ebrsize, size_bytes, ebraux.part_next, name)
+                    ebraux.part_next = ebr.part_start - ebrsize
                     foundSpace = True
                     break
-                ebraux = Fread_displacement(file, ebraux.part_next, ebr)
+                ebraux = Fread_displacement(file, ebraux.part_next, ebraux)
                 if not ebraux:
                     printError("No se pudo leer el EBR")
                     file.close()
                     return False
                 
+            isFirst = False
             if not foundSpace:
-                if ebraux.part_next == -1:
-                    # If is the first and is empty
-                    if ebraux.part_s == -1:
-                        if ebraux.part_start + size_bytes <= extended_partition.part_start + extended_partition.part_s:
-                            foundSpace = True
-                        else:
-                            printError("No hay espacio disponible")
-                            file.close()
-                            return False
+                # If is the first and is empty
+                if ebraux.part_s == -1:
+                    if ebraux.part_start + size_bytes <= extended_partition.part_start + extended_partition.part_s:
+                        isFirst = True
+                        ebr.set_info('n', fit, ebraux.part_start, size_bytes, -1, name)
+                        foundSpace = True
                     else:
-                        if ebraux.part_start + ebraux.part_s + ebrsize + size_bytes <= extended_partition.part_start + extended_partition.part_s:
-                            foundSpace = True
-                        else:
-                            printError("No hay espacio disponible")
-                            file.close()
-                            return False
+                        printError("No hay espacio disponible")
+                        file.close()
+                        return False
                 else:
-                    printError("No hay espacio disponible")
+                    if ebraux.part_start + ebraux.part_s + ebrsize + size_bytes <= extended_partition.part_start + extended_partition.part_s:
+                        ebr.set_info('n', fit, ebraux.part_start + ebraux.part_s + ebrsize, size_bytes, -1, name)
+                        ebraux.part_next = ebr.part_start - ebrsize
+                        foundSpace = True
+                    else:
+                        printError("No hay espacio disponible")
+                        file.close()
+                        return False
+            
+            print("\n***** Creando PARTICIÓN *****")
+            ebr.display_info()
+            print("\n***** Escribiendo EBR *****")
+            if isFirst:
+                # If is the first we have to write the EBR in the extended partition
+                if not Fwrite_displacement(file, extended_partition.part_start, ebr):
+                    printError("No se pudo escribir el EBR")
+                    file.close()
+                    return False
+                else:
+                    printSuccess("Se creo el EBR correctamente")
+            else:
+                # If is not the first we have to write the EBR previous with the updated next and the new EBR
+                if not Fwrite_displacement(file, ebraux.part_start - ebrsize, ebraux):
+                    printError("No se pudo escribir el EBR")
                     file.close()
                     return False
                 
-            if not foundSpace:
-                printError("No hay espacio disponible")
-                file.close()
-                return False
-            
-            if ebraux.part_s == -1:
-                ebr.set_info('n', fit, ebraux.part_start, size_bytes, -1, name)
-            else:
-                ebr.set_info('n', fit, ebraux.part_start + ebraux.part_s + ebrsize, size_bytes, -1, name)
-            ebr.display_info()
-            print("\n***** Escribiendo EBR *****")
-            if not Fwrite_displacement(file, ebr.part_start - ebrsize, ebr):
-                printError("No se pudo escribir el EBR")
-                file.close()
-                return False
+                if not Fwrite_displacement(file, ebr.part_start - ebrsize, ebr):
+                    printError("No se pudo escribir el EBR")
+                    file.close()
+                    return False
             printSuccess("Se creo la partición correctamente\n")
 
     file.close()
