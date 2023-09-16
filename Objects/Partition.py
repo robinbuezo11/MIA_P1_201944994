@@ -118,23 +118,29 @@ class Partition(ctypes.Structure):
     def generate_report_disk(self, file, size_disk):
         if self.part_type.decode() == 'e':
             ebr = EBR()
+            ebrsize = struct.calcsize(ebr.get_const())
             if not Fread_displacement(file, self.part_start, ebr):
                 printError(f'No se pudo leer el EBR del disco {file.name}')
                 return ''
-            end_used = 0
+            end_used = self.part_start
             code = '''|{Extendida|{'''
             while ebr.part_next != -1:
-                if end_used != ebr.part_start-struct.calcsize(ebr.get_const()):
-                    code += f'|Libre\\n{((((ebr.part_start-struct.calcsize(ebr.get_const())) - end_used)/size_disk)*100):.2f}% del disco'
-                code += f'|EBR|Lógica\\n{(((ebr.part_s)/size_disk)*100):.2f}% del disco'
+                if end_used != ebr.part_start - ebrsize:
+                    code += f'Libre\\n{((((ebr.part_start-ebrsize) - end_used)/size_disk)*100):.2f}% del disco|'
+                code += f'EBR|Lógica\\n{(((ebr.part_s)/size_disk)*100):.2f}% del disco|'
                 end_used = ebr.part_start + ebr.part_s
 
                 if not Fread_displacement(file, ebr.part_next, ebr):
                     printError(f'No se pudo leer el EBR del disco {file.name}')
                     return ''
+            if ebr.part_s != -1:
+                if end_used != ebr.part_start - ebrsize:
+                    code += f'Libre\\n{((((ebr.part_start-ebrsize) - end_used)/size_disk)*100):.2f}% del disco'
+                code += f'EBR|Lógica\\n{(((ebr.part_s)/size_disk)*100):.2f}% del disco'
+                end_used = ebr.part_start + ebr.part_s
                 
-            if end_used != self.part_s:
-                code += f'|Libre\\n{(((self.part_s - end_used)/size_disk)*100):.2f}% del disco'
+            if end_used != self.part_start + self.part_s:
+                code += f'|Libre\\n{(((self.part_start + self.part_s - end_used)/size_disk)*100):.2f}% del disco'
             code += '''}}'''
             return code
         else:

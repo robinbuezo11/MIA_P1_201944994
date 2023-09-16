@@ -148,7 +148,8 @@ class MBR(ctypes.Structure):
                         <td><b>dsk_fit      </b> '''+self.dsk_fit.decode().upper()+'''</td>
                     </tr>'''
             for i in range(4):
-                code += self.partitions[i].generate_report_mbr(file)
+                if self.partitions[i].part_s != -1:
+                    code += self.partitions[i].generate_report_mbr(file)
             code += '''
                 </table>>];
             }'''
