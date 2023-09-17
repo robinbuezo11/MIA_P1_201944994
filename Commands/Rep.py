@@ -5,10 +5,8 @@ from Utils.Globals import *
 
 def rep(name, path, id, ruta):
     printConsole('Ejecutando el comando REP')
-    
     print('\n***** Buscando el disco *****')
     partition = get_mounted_partitionbyId(id)
-
     if not partition:
         printError(f'No se encontró la partición {id}')
         return False
@@ -46,6 +44,9 @@ def rep(name, path, id, ruta):
             file.close()
             return False
         printSuccess(f'Se genero el reporte {name} correctamente')
+
+    #elif name == 'inode':
+        
         
     try:
         file.close()

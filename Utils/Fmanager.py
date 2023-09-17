@@ -3,10 +3,10 @@ import os
 from Utils.Utilities import *
 
 def Fwrite_displacement(file, displacement, obj):
-    print("Escribiendo en: ", displacement)
-    #print("Size: ",  ctypes.sizeof(obj))
-    #print("Size data: ",  len(data))
     try:
+        #print("Escribiendo en: ", displacement)
+        #print("Size: ",  ctypes.sizeof(obj))
+        #print("Size data: ",  len(data))
         file.seek(displacement)
         data = obj.doSerialize()
         file.write(data)
@@ -16,8 +16,8 @@ def Fwrite_displacement(file, displacement, obj):
         return False
     
 def Fwrite_displacement_data(file, displacement, data):
-    print("Escribiendo en: ", displacement)
     try:
+        #print("Escribiendo en: ", displacement)
         file.seek(displacement)
         file.write(data)
         return True
@@ -27,7 +27,7 @@ def Fwrite_displacement_data(file, displacement, data):
     
 def Fread_displacement(file, displacement,obj):
     try:
-        print("Leyendo en: ", displacement)
+        #print("Leyendo en: ", displacement)
         #print("Size: ",  ctypes.sizeof(obj))
         file.seek(displacement)
         data = file.read(len(obj.doSerialize()))
@@ -68,9 +68,3 @@ def Winit_size(file,size_mb):
     except Exception as e:
         printError(f"{e}")
         return False
-
-    
-
-
-
-  

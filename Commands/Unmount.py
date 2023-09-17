@@ -6,7 +6,7 @@ def unmount(id):
     print('\n***** Buscando la particion *****')
     partition = get_mounted_partitionbyId(id)
     if not partition:
-        printError(f'No se encontro la particion {id}')
+        printError(f'No se encontro la particion {id} entre las particiones montadas')
         return False
 
     print('\n***** Desmontando la particion *****')

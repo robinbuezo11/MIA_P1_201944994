@@ -13,6 +13,7 @@ reserved = {
     'fdisk' : 'FDISK',
     'mount' : 'MOUNT',
     'unmount' : 'UNMOUNT',
+    'mkfs' : 'MKFS',
 
     'pause' : 'PAUSE',
     'rep' : 'REP',
@@ -27,6 +28,7 @@ reserved = {
     'add' : 'ADD',
     'id' : 'ID',
     'ruta' : 'RUTA',
+    'fs' : 'FS',
 }
 
 # List of global token names.   This is always required

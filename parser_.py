@@ -9,6 +9,7 @@ from Commands.Rep import *
 from Commands.Mount import *
 from Commands.Unmount import *
 from Commands.Pause import *
+from Commands.Mkfs import *
 
 # Grammar rules
 def p_init(t):
@@ -25,6 +26,7 @@ def p_commands(t):
                 | command_fdisk
                 | command_mount
                 | command_unmount
+                | command_mkfs
 
                 | command_pause
                 | command_rep
@@ -270,6 +272,54 @@ def p_command_unmount(t):
     '''command_unmount : UNMOUNT GUION ID IGUAL CADENA
                        | UNMOUNT GUION ID IGUAL CADENA_SC'''
     unmount(t[5])
+
+#------------------------------------------------------------
+#------------------------ MKFS ------------------------------
+def p_command_mkfs(t):
+    '''command_mkfs : MKFS params_mkfs'''
+
+    required_params = ['id']
+
+    for param in required_params:
+        if param not in t[2]:
+            printError(f'MKFS -> Parametro {param} requerido')
+            return
+        
+    id = t[2].get('id')
+    type = t[2].get('type', 'full')
+    fs = t[2].get('fs', '2fs')
+
+    if type not in ['full']:
+        try:
+            printError(f'MKFS -> Tipo {str(type).upper()} no reconocido')
+        except:
+            printError(f'MKFS -> Tipo {type} no reconocido')
+        return
+    
+    if fs not in ['2fs', '3fs']:
+        try:
+            printError(f'MKFS -> Sistema de archivos {str(fs).upper()} no reconocido')
+        except:
+            printError(f'MKFS -> Sistema de archivos {fs} no reconocido')
+        return
+    
+    mkfs(id, fs)
+
+def p_params_mkfs(t):
+    '''params_mkfs : params_mkfs param_mkfs
+                    | param_mkfs'''
+    if len(t) != 2:
+        t[1].update(t[2])
+        t[0] = t[1]
+    else:
+        t[0] = t[1]
+
+def p_param_mkfs(t):
+    '''param_mkfs : GUION ID IGUAL CADENA
+                    | GUION ID IGUAL CADENA_SC
+                    | GUION TYPE IGUAL CADENA_SC
+                    | GUION FS IGUAL CADENA_SC'''
+    t[0] = {t[2]: t[4]}
 
 #------------------------------------------------------------
 #------------------------ PAUSE -----------------------------
