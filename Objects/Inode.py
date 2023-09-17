@@ -98,5 +98,52 @@ class Inode(ctypes.Structure):
         return serialize
     
     def doDeserialize(self, data):
-        self.i_uid, self.i_gid, self.i_s, self.i_atime, self.i_ctime, self.i_mtime, *self.i_block, self.i_type,
-        self.i_perm = struct.unpack(const, data)
+        unpack = struct.unpack(const, data)
+        (
+            self.i_uid,
+            self.i_gid,
+            self.i_s,
+            self.i_atime,
+            self.i_ctime,
+            self.i_mtime,
+        ) = unpack[:6]
+
+        self.i_block = (ctypes.c_int * 15)(*unpack[6:21])
+
+        (
+            self.i_type,
+            self.i_perm
+        ) = unpack[21:]
+
+    def generate_report_inode(self, index):
+        code = '''<tr>
+                    <td bgcolor="#3371ff"><b>Inodo '''+str(index)+'''</b></td>
+                </tr>
+                <tr>
+                    <td><b>i_uid      </b> '''+str(self.i_uid)+'''</td>
+                </tr>
+                <tr>
+                    <td><b>i_gid      </b> '''+str(self.i_gid)+'''</td>
+                </tr>
+                <tr>
+                    <td><b>i_size      </b> '''+str(self.i_s)+'''</td>
+                </tr>
+                <tr>
+                    <td><b>i_atime      </b> '''+self.i_atime.decode()+'''</td>
+                </tr>
+                <tr>
+                    <td><b>i_ctime      </b> '''+self.i_ctime.decode()+'''</td>
+                </tr>
+                <tr>
+                    <td><b>i_mtime      </b> '''+self.i_mtime.decode()+'''</td>
+                </tr>
+                <tr>
+                    <td><b>i_block      </b> '''+str(list(self.i_block))+'''</td>
+                </tr>
+                <tr>
+                    <td><b>i_type      </b> '''+self.i_type.decode()+'''</td>
+                </tr>
+                <tr>
+                    <td><b>i_perm      </b> '''+str(self.i_perm)+'''</td>
+                </tr>'''
+        return code

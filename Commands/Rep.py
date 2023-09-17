@@ -6,24 +6,26 @@ from Utils.Globals import *
 def rep(name, path, id, ruta):
     printConsole('Ejecutando el comando REP')
     print('\n***** Buscando el disco *****')
-    partition = get_mounted_partitionbyId(id)
-    if not partition:
+    mounted_partition = get_mounted_partitionbyId(id)
+    if not mounted_partition:
         printError(f'No se encontró la partición {id}')
         return False
     
     print('\n***** Abriendo el disco *****')
     try:
-        file = open(partition['path'], 'rb+')
+        file = open(mounted_partition['path'], 'rb+')
     except:
-        printError(f'No se pudo abrir el disco {partition["path"]}')
+        printError(f'No se pudo abrir el disco {mounted_partition["path"]}')
         return False
     
     print('\n***** Leyendo el MBR *****')
     mbr = MBR()
     if not Fread_displacement(file, 0, mbr):
-        printError(f'No se pudo leer el MBR del disco {partition["path"]}')
+        printError(f'No se pudo leer el MBR del disco {mounted_partition["path"]}')
         file.close()
         return False
+    
+    partition = mounted_partition['partition']
     
     # We have to check the type of report to generate in base of the name
     print('\n***** Generando el reporte *****')
@@ -45,13 +47,19 @@ def rep(name, path, id, ruta):
             return False
         printSuccess(f'Se genero el reporte {name} correctamente')
 
-    #elif name == 'inode':
-        
+    elif name == 'inode':
+        code = partition.generate_report_inode(file)
+
+        if not execute_graphviz(code, path):
+            printError(f'No se pudo generar el reporte {name}')
+            file.close()
+            return False
+        printSuccess(f'Se genero el reporte {name} correctamente')
         
     try:
         file.close()
     except:
-        printError(f'No se pudo cerrar el disco {partition["path"]}')
+        printError(f'No se pudo cerrar el disco {mounted_partition["path"]}')
         return False    
     
     printConsole("Finalizando REP\n")

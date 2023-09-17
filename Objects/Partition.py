@@ -1,8 +1,10 @@
 import ctypes
 import struct
 from Utils.Utilities import coding_str
-from Objects.EBR import EBR
 from Utils.Fmanager import *
+from Objects.EBR import EBR
+from Objects.SuperBlock import SuperBlock
+
 
 const = 'sssii16s' 
 
@@ -146,3 +148,23 @@ class Partition(ctypes.Structure):
         else:
             code = f'|Primaria\\n{(((self.part_s)/size_disk)*100):.2f}% del disco'
             return code
+        
+    def generate_report_inode(self, file):
+        try:
+            code = '''
+            digraph G {
+            rankdir="LR"
+                subgraph inod {
+                    bgcolor="#3371ff" node [style=filled shape=record]'''
+            
+            super_block = SuperBlock()
+            if not Fread_displacement(file, self.part_start, super_block):
+                printError(f'No se pudo leer el Super Bloque del disco {file.name}')
+                return code + '''inode [label = "No se pudo leer el Super Bloque"];}'''
+            
+            code += super_block.generate_report_inode(file)
+            code += '}\n}'
+        except Exception as e:
+            print(f'Error al generar el reporte: {e}')
+            code = ''
+        return code

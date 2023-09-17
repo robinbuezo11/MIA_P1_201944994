@@ -1,8 +1,10 @@
 import ctypes
 import struct
 from Utils.Utilities import coding_str
+from Utils.Fmanager import *
+from Objects.Inode import Inode
 
-const = 'iiiii19s19siiiiiiiiii'
+const = 'iiiii19s19siHiiiiiiii'
 
 class SuperBlock(ctypes.Structure):
 
@@ -15,7 +17,7 @@ class SuperBlock(ctypes.Structure):
         ('s_mtime', ctypes.c_char * 19),
         ('s_umtime', ctypes.c_char * 19),
         ('s_mnt_count', ctypes.c_int),
-        ('s_magic', ctypes.c_int),
+        ('s_magic', ctypes.c_uint16),
         ('s_inode_s', ctypes.c_int),
         ('s_block_s', ctypes.c_int),
         ('s_first_ino', ctypes.c_int),
@@ -124,7 +126,7 @@ class SuperBlock(ctypes.Structure):
         print("Inicio de la Tabla de Bloques: ", self.s_block_start, "\n")
 
     def doSerialize(self):
-        serialize = struct.pack(
+        return struct.pack(
             const,
             self.s_filesystem_type,
             self.s_inodes_count,
@@ -144,9 +146,45 @@ class SuperBlock(ctypes.Structure):
             self.s_inode_start,
             self.s_block_start
         )
-        return serialize
     
     def doDeserialize(self, data):
-        self.s_filesystem_type, self.s_inodes_count, self.s_blocks_count, self.s_free_blocks_count, self.s_free_inodes_count, self.s_mtime, 
-        self.s_umtime, self.s_mnt_count, self.s_magic, self.s_inode_s, self.s_block_s, self.s_first_ino, self.s_first_blo, self.s_bm_inode_start, 
-        self.s_bm_block_start, self.s_inode_start, self.s_block_start = struct.unpack(const, data)
+        (self.s_filesystem_type,
+        self.s_inodes_count,
+        self.s_blocks_count,
+        self.s_free_blocks_count,
+        self.s_free_inodes_count,
+        self.s_mtime,
+        self.s_umtime,
+        self.s_mnt_count,
+        self.s_magic,
+        self.s_inode_s,
+        self.s_block_s,
+        self.s_first_ino,
+        self.s_first_blo,
+        self.s_bm_inode_start,
+        self.s_bm_block_start,
+        self.s_inode_start,
+        self.s_block_start) = struct.unpack(const, data)
+
+    def generate_report_inode(self, file):
+        try:
+            inode = Inode()
+            code = ''
+            connections = ''
+            for i in range(self.s_inodes_count):
+                Fread_displacement(file, self.s_inode_start + i * struct.calcsize(inode.get_const()), inode)
+                if inode.i_s == -1:
+                    continue
+
+                code += f'node{i} [label = <<table cellspacing="0" cellpadding="2">\n'
+                code += inode.generate_report_inode(i)
+                code += '</table>>];\n'
+
+                if i == 0:
+                    connections += f'node{i}'
+                else:
+                    connections += f'->node{i}'
+            code += connections + ';\n'
+            return code
+        except:
+            return ''
