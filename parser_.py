@@ -354,8 +354,8 @@ def p_command_rep(t):
             printError(f'REP -> Reporte {name} no reconocido')
         return
     
-    if path[-3:] not in ['png', 'jpg', 'pdf']:
-        printError(f'REP -> La extension del archivo {path} debe ser .png, .jpg o .pdf')
+    if path[-3:] not in ['png', 'jpg', 'pdf', 'txt']:
+        printError(f'REP -> La extension del archivo {path} debe ser .txt, .png, .jpg o .pdf')
         return
     
     rep(name, path, id, ruta)

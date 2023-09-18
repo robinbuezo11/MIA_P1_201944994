@@ -41,3 +41,20 @@ class Content(ctypes.Structure):
     
     def doDeserialize(self, data):
         self.b_inodo,self.b_name = struct.unpack(const, data)
+
+    def generate_report_block(self):
+        code = '''
+        <tr>
+            <td><b>b_inodo      </b> '''+str(self.b_inodo)+'''</td>
+        </tr>
+        <tr>
+            <td><b>b_name      </b> '''+self.b_name.decode()+'''</td>
+        </tr>'''
+        return code
+    
+    def generate_report_tree(self):
+        code = f'''
+        <tr>
+            <td>{self.b_name.decode()}</td><td>{self.b_inodo}</td>
+        </tr>'''
+        return code

@@ -57,3 +57,10 @@ class Journal(ctypes.Structure):
     def doDeserialize(self, data):
         self.j_filesystem_op, self.j_path, self.j_content, self.j_date = struct.unpack(const, data)
 
+    def generate_report_journal(self):
+        operations = ['MKDIR', 'MKFILE', 'RMDIR', 'RMFILE', 'EDIT', 'REN', 'MOVE', 'CAT', 'CHMOD', 'CHOWN', 'LOSS', 'RECOVERY']
+        return f'''
+        <tr>
+            <td>{operations[self.j_filesystem_op]}</td><td>{self.j_path.decode().replace(chr(0), "")}</td>
+            <td>{self.j_content.decode().replace(chr(0), "")}</td><td>{self.j_date.decode()}</td>
+        </tr>'''

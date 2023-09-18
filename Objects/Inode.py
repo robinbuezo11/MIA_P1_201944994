@@ -1,6 +1,10 @@
 import ctypes
 import struct
 from Utils.Utilities import coding_str
+from Utils.Fmanager import *
+from Objects.FileBlock import FileBlock
+from Objects.FolderBlock import FolderBlock
+from Objects.PointersBlock import PointersBlock
 
 const = 'iii19s19s19s15isi'
 
@@ -146,4 +150,48 @@ class Inode(ctypes.Structure):
                 <tr>
                     <td><b>i_perm      </b> '''+str(self.i_perm)+'''</td>
                 </tr>'''
+        return code
+    
+    def generate_report_tree(self, index):
+        try:
+            code = f'''
+            inode{index} [label=<<table cellspacing="0" cellpadding="2">
+                <tr>
+                    <td bgcolor="#3371ff"><b>Inodo{index}</b></td>
+                </tr>
+                <tr>
+                    <td><b>i_uid      </b> {self.i_uid}</td>
+                </tr>
+                <tr>
+                    <td><b>i_gid      </b> {self.i_gid}</td>
+                </tr>
+                <tr>
+                    <td><b>i_size      </b> {self.i_s}</td>
+                </tr>
+                <tr>
+                    <td><b>i_atime      </b> {self.i_atime.decode()}</td>
+                </tr>
+                <tr>
+                    <td><b>i_ctime      </b> {self.i_ctime.decode()}</td>
+                </tr>
+                <tr>
+                    <td><b>i_mtime      </b> {self.i_mtime.decode()}</td>
+                </tr>'''
+            for i in range(15):
+                code += f'''
+                <tr>
+                    <td><b>i_block[{i}]      </b> {self.i_block[i]}</td>
+                </tr>'''
+            code += f'''
+                <tr>
+                    <td><b>i_type      </b> {self.i_type.decode()}</td>
+                </tr>
+                <tr>
+                    <td><b>i_perm      </b> {self.i_perm}</td>
+                </tr>
+            </table>>];'''
+                        
+        except Exception as e:
+            print(f'Error al generar reporte tree: {e}')
+            return '', ''
         return code

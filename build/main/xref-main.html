@@ -225,6 +225,7 @@ imported by:
     <a href="#Commands.Execute">Commands.Execute</a>
  &#8226;   <a href="#Commands.Fdisk">Commands.Fdisk</a>
  &#8226;   <a href="#Commands.Mkdisk">Commands.Mkdisk</a>
+ &#8226;   <a href="#Commands.Mkfs">Commands.Mkfs</a>
  &#8226;   <a href="#Commands.Mount">Commands.Mount</a>
  &#8226;   <a href="#Commands.Pause">Commands.Pause</a>
  &#8226;   <a href="#Commands.Rep">Commands.Rep</a>
@@ -285,6 +286,33 @@ imports:
  &#8226;   <a href="#Utils.Utilities">Utils.Utilities</a>
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#os">os</a>
+ &#8226;   <a href="#struct">struct</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#parser_">parser_</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Commands.Mkfs"></a>
+  <a target="code" href="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Commands/Mkfs.py" type="text/plain"><tt>Commands.Mkfs</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Commands">Commands</a>
+ &#8226;   <a href="#Objects.FileBlock">Objects.FileBlock</a>
+ &#8226;   <a href="#Objects.FolderBlock">Objects.FolderBlock</a>
+ &#8226;   <a href="#Objects.Inode">Objects.Inode</a>
+ &#8226;   <a href="#Objects.Journaling">Objects.Journaling</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
+ &#8226;   <a href="#Utils.Fmanager">Utils.Fmanager</a>
+ &#8226;   <a href="#Utils.Globals">Utils.Globals</a>
+ &#8226;   <a href="#Utils.Utilities">Utils.Utilities</a>
+ &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#math">math</a>
  &#8226;   <a href="#struct">struct</a>
 
   </div>
@@ -394,9 +422,36 @@ imported by:
   <a target="code" href="-" type="text/plain"><tt>Objects</tt></a>
 <span class="moduletype">NamespacePackage</span>  <div class="import">
 imported by:
-    <a href="#Objects.EBR">Objects.EBR</a>
+    <a href="#Objects.Content">Objects.Content</a>
+ &#8226;   <a href="#Objects.EBR">Objects.EBR</a>
+ &#8226;   <a href="#Objects.FileBlock">Objects.FileBlock</a>
+ &#8226;   <a href="#Objects.FolderBlock">Objects.FolderBlock</a>
+ &#8226;   <a href="#Objects.Inode">Objects.Inode</a>
+ &#8226;   <a href="#Objects.Journal">Objects.Journal</a>
+ &#8226;   <a href="#Objects.Journaling">Objects.Journaling</a>
  &#8226;   <a href="#Objects.MBR">Objects.MBR</a>
  &#8226;   <a href="#Objects.Partition">Objects.Partition</a>
+ &#8226;   <a href="#Objects.PointersBlock">Objects.PointersBlock</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Objects.Content"></a>
+  <a target="code" href="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Objects/Content.py" type="text/plain"><tt>Objects.Content</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Objects">Objects</a>
+ &#8226;   <a href="#Utils.Utilities">Utils.Utilities</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#struct">struct</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Objects.FolderBlock">Objects.FolderBlock</a>
 
   </div>
 
@@ -418,6 +473,112 @@ imported by:
     <a href="#Commands.Fdisk">Commands.Fdisk</a>
  &#8226;   <a href="#Objects.MBR">Objects.MBR</a>
  &#8226;   <a href="#Objects.Partition">Objects.Partition</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Objects.FileBlock"></a>
+  <a target="code" href="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Objects/FileBlock.py" type="text/plain"><tt>Objects.FileBlock</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Objects">Objects</a>
+ &#8226;   <a href="#Utils.Utilities">Utils.Utilities</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#struct">struct</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Commands.Mkfs">Commands.Mkfs</a>
+ &#8226;   <a href="#Objects.Inode">Objects.Inode</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Objects.FolderBlock"></a>
+  <a target="code" href="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Objects/FolderBlock.py" type="text/plain"><tt>Objects.FolderBlock</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Objects">Objects</a>
+ &#8226;   <a href="#Objects.Content">Objects.Content</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#struct">struct</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Commands.Mkfs">Commands.Mkfs</a>
+ &#8226;   <a href="#Objects.Inode">Objects.Inode</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Objects.Inode"></a>
+  <a target="code" href="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Objects/Inode.py" type="text/plain"><tt>Objects.Inode</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Objects">Objects</a>
+ &#8226;   <a href="#Objects.FileBlock">Objects.FileBlock</a>
+ &#8226;   <a href="#Objects.FolderBlock">Objects.FolderBlock</a>
+ &#8226;   <a href="#Objects.PointersBlock">Objects.PointersBlock</a>
+ &#8226;   <a href="#Utils.Fmanager">Utils.Fmanager</a>
+ &#8226;   <a href="#Utils.Utilities">Utils.Utilities</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#struct">struct</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Commands.Mkfs">Commands.Mkfs</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Objects.Journal"></a>
+  <a target="code" href="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Objects/Journal.py" type="text/plain"><tt>Objects.Journal</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Objects">Objects</a>
+ &#8226;   <a href="#Utils.Utilities">Utils.Utilities</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#struct">struct</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Objects.Journaling">Objects.Journaling</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Objects.Journaling"></a>
+  <a target="code" href="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Objects/Journaling.py" type="text/plain"><tt>Objects.Journaling</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Objects">Objects</a>
+ &#8226;   <a href="#Objects.Journal">Objects.Journal</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#struct">struct</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Commands.Mkfs">Commands.Mkfs</a>
+ &#8226;   <a href="#Objects.Partition">Objects.Partition</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
 
   </div>
 
@@ -456,6 +617,8 @@ imported by:
 imports:
     <a href="#Objects">Objects</a>
  &#8226;   <a href="#Objects.EBR">Objects.EBR</a>
+ &#8226;   <a href="#Objects.Journaling">Objects.Journaling</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
  &#8226;   <a href="#Utils.Fmanager">Utils.Fmanager</a>
  &#8226;   <a href="#Utils.Utilities">Utils.Utilities</a>
  &#8226;   <a href="#ctypes">ctypes</a>
@@ -466,6 +629,51 @@ imports:
 imported by:
     <a href="#Commands.Fdisk">Commands.Fdisk</a>
  &#8226;   <a href="#Objects.MBR">Objects.MBR</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Objects.PointersBlock"></a>
+  <a target="code" href="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Objects/PointersBlock.py" type="text/plain"><tt>Objects.PointersBlock</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Objects">Objects</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#struct">struct</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Objects.Inode">Objects.Inode</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Objects.SuperBlock"></a>
+  <a target="code" href="/home/robin/Documentos/Archivos/Proyectos/Proyecto1/MIA_P1_201944994/Objects/SuperBlock.py" type="text/plain"><tt>Objects.SuperBlock</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Objects">Objects</a>
+ &#8226;   <a href="#Objects.FileBlock">Objects.FileBlock</a>
+ &#8226;   <a href="#Objects.FolderBlock">Objects.FolderBlock</a>
+ &#8226;   <a href="#Objects.Inode">Objects.Inode</a>
+ &#8226;   <a href="#Objects.Journaling">Objects.Journaling</a>
+ &#8226;   <a href="#Objects.PointersBlock">Objects.PointersBlock</a>
+ &#8226;   <a href="#Utils.Fmanager">Utils.Fmanager</a>
+ &#8226;   <a href="#Utils.Utilities">Utils.Utilities</a>
+ &#8226;   <a href="#ctypes">ctypes</a>
+ &#8226;   <a href="#struct">struct</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Commands.Mkfs">Commands.Mkfs</a>
+ &#8226;   <a href="#Objects.Partition">Objects.Partition</a>
 
   </div>
 
@@ -499,11 +707,14 @@ imports:
 imported by:
     <a href="#Commands.Fdisk">Commands.Fdisk</a>
  &#8226;   <a href="#Commands.Mkdisk">Commands.Mkdisk</a>
+ &#8226;   <a href="#Commands.Mkfs">Commands.Mkfs</a>
  &#8226;   <a href="#Commands.Mount">Commands.Mount</a>
  &#8226;   <a href="#Commands.Rep">Commands.Rep</a>
  &#8226;   <a href="#Commands.Rmdisk">Commands.Rmdisk</a>
+ &#8226;   <a href="#Objects.Inode">Objects.Inode</a>
  &#8226;   <a href="#Objects.MBR">Objects.MBR</a>
  &#8226;   <a href="#Objects.Partition">Objects.Partition</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
  &#8226;   <a href="#main.py">main.py</a>
 
   </div>
@@ -520,7 +731,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#Commands.Mount">Commands.Mount</a>
+    <a href="#Commands.Mkfs">Commands.Mkfs</a>
+ &#8226;   <a href="#Commands.Mount">Commands.Mount</a>
  &#8226;   <a href="#Commands.Rep">Commands.Rep</a>
  &#8226;   <a href="#Commands.Unmount">Commands.Unmount</a>
 
@@ -540,14 +752,20 @@ imports:
 imported by:
     <a href="#Commands.Execute">Commands.Execute</a>
  &#8226;   <a href="#Commands.Mkdisk">Commands.Mkdisk</a>
+ &#8226;   <a href="#Commands.Mkfs">Commands.Mkfs</a>
  &#8226;   <a href="#Commands.Mount">Commands.Mount</a>
  &#8226;   <a href="#Commands.Pause">Commands.Pause</a>
  &#8226;   <a href="#Commands.Rep">Commands.Rep</a>
  &#8226;   <a href="#Commands.Rmdisk">Commands.Rmdisk</a>
  &#8226;   <a href="#Commands.Unmount">Commands.Unmount</a>
+ &#8226;   <a href="#Objects.Content">Objects.Content</a>
  &#8226;   <a href="#Objects.EBR">Objects.EBR</a>
+ &#8226;   <a href="#Objects.FileBlock">Objects.FileBlock</a>
+ &#8226;   <a href="#Objects.Inode">Objects.Inode</a>
+ &#8226;   <a href="#Objects.Journal">Objects.Journal</a>
  &#8226;   <a href="#Objects.MBR">Objects.MBR</a>
  &#8226;   <a href="#Objects.Partition">Objects.Partition</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
  &#8226;   <a href="#Utils.Fmanager">Utils.Fmanager</a>
  &#8226;   <a href="#lexer">lexer</a>
  &#8226;   <a href="#main.py">main.py</a>
@@ -1954,9 +2172,17 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#Objects.EBR">Objects.EBR</a>
+    <a href="#Objects.Content">Objects.Content</a>
+ &#8226;   <a href="#Objects.EBR">Objects.EBR</a>
+ &#8226;   <a href="#Objects.FileBlock">Objects.FileBlock</a>
+ &#8226;   <a href="#Objects.FolderBlock">Objects.FolderBlock</a>
+ &#8226;   <a href="#Objects.Inode">Objects.Inode</a>
+ &#8226;   <a href="#Objects.Journal">Objects.Journal</a>
+ &#8226;   <a href="#Objects.Journaling">Objects.Journaling</a>
  &#8226;   <a href="#Objects.MBR">Objects.MBR</a>
  &#8226;   <a href="#Objects.Partition">Objects.Partition</a>
+ &#8226;   <a href="#Objects.PointersBlock">Objects.PointersBlock</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
  &#8226;   <a href="#Utils.Fmanager">Utils.Fmanager</a>
  &#8226;   <a href="#ctypes._endian">ctypes._endian</a>
 
@@ -2022,6 +2248,7 @@ imports:
   <div class="import">
 imported by:
     <a href="#Commands.Mkdisk">Commands.Mkdisk</a>
+ &#8226;   <a href="#Commands.Mkfs">Commands.Mkfs</a>
  &#8226;   <a href="#_strptime">_strptime</a>
  &#8226;   <a href="#calendar">calendar</a>
  &#8226;   <a href="#email.utils">email.utils</a>
@@ -6083,7 +6310,8 @@ imported by:
   <a name="math"></a>
   <tt>math</tt> <span class="moduletype"><i>(builtin module)</i></span>  <div class="import">
 imported by:
-    <a href="#_pydecimal">_pydecimal</a>
+    <a href="#Commands.Mkfs">Commands.Mkfs</a>
+ &#8226;   <a href="#_pydecimal">_pydecimal</a>
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#fractions">fractions</a>
  &#8226;   <a href="#random">random</a>
@@ -6372,6 +6600,7 @@ imports:
     <a href="#Commands.Execute">Commands.Execute</a>
  &#8226;   <a href="#Commands.Fdisk">Commands.Fdisk</a>
  &#8226;   <a href="#Commands.Mkdisk">Commands.Mkdisk</a>
+ &#8226;   <a href="#Commands.Mkfs">Commands.Mkfs</a>
  &#8226;   <a href="#Commands.Mount">Commands.Mount</a>
  &#8226;   <a href="#Commands.Pause">Commands.Pause</a>
  &#8226;   <a href="#Commands.Rep">Commands.Rep</a>
@@ -7130,9 +7359,18 @@ imports:
 imported by:
     <a href="#Commands.Fdisk">Commands.Fdisk</a>
  &#8226;   <a href="#Commands.Mkdisk">Commands.Mkdisk</a>
+ &#8226;   <a href="#Commands.Mkfs">Commands.Mkfs</a>
+ &#8226;   <a href="#Objects.Content">Objects.Content</a>
  &#8226;   <a href="#Objects.EBR">Objects.EBR</a>
+ &#8226;   <a href="#Objects.FileBlock">Objects.FileBlock</a>
+ &#8226;   <a href="#Objects.FolderBlock">Objects.FolderBlock</a>
+ &#8226;   <a href="#Objects.Inode">Objects.Inode</a>
+ &#8226;   <a href="#Objects.Journal">Objects.Journal</a>
+ &#8226;   <a href="#Objects.Journaling">Objects.Journaling</a>
  &#8226;   <a href="#Objects.MBR">Objects.MBR</a>
  &#8226;   <a href="#Objects.Partition">Objects.Partition</a>
+ &#8226;   <a href="#Objects.PointersBlock">Objects.PointersBlock</a>
+ &#8226;   <a href="#Objects.SuperBlock">Objects.SuperBlock</a>
  &#8226;   <a href="#base64">base64</a>
  &#8226;   <a href="#ctypes">ctypes</a>
  &#8226;   <a href="#gettext">gettext</a>

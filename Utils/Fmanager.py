@@ -37,6 +37,17 @@ def Fread_displacement(file, displacement,obj):
     except Exception as e:
         printError(f"{e}")
         return None
+    
+def Fread_displacement_data(file, displacement,size):
+    try:
+        #print("Leyendo en: ", displacement)
+        file.seek(displacement)
+        data = file.read(size)
+        #print("Size data: ",  len(data))
+        return data
+    except Exception as e:
+        printError(f"{e}")
+        return None
 
 def Fcreate_file(file_name):
     try:

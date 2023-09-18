@@ -33,3 +33,25 @@ class FileBlock(ctypes.Structure):
         self.b_content = struct.unpack(const, data)[0]
             
 
+    def generate_report_block(self, index):
+        code = '''
+        <tr>
+            <td bgcolor="#3371ff"><b>Bloque Archivo '''+str(index)+'''</b></td>
+        </tr>
+        <tr>
+            <td><b>b_content      </b> '''+self.b_content.decode()+'''</td>
+        </tr>'''
+        return code
+    
+    def generate_report_tree(self, index):
+        code = f'''
+        file{index} [label=<<table cellspacing="0" cellpadding="2">
+            <tr>
+                <td bgcolor="#3371ff"><b>Bloque Archivo{index}</b></td>
+            </tr>
+            <tr>
+                <td>{self.b_content.decode()}</td>
+            </tr>
+        </table>>];
+        '''
+        return code

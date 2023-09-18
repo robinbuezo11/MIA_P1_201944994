@@ -4,6 +4,7 @@ from Utils.Utilities import coding_str
 from Utils.Fmanager import *
 from Objects.EBR import EBR
 from Objects.SuperBlock import SuperBlock
+from Objects.Journaling import Journaling
 
 
 const = 'sssii16s' 
@@ -163,6 +164,139 @@ class Partition(ctypes.Structure):
                 return code + '''inode [label = "No se pudo leer el Super Bloque"];}'''
             
             code += super_block.generate_report_inode(file)
+            code += '}\n}'
+        except Exception as e:
+            print(f'Error al generar el reporte: {e}')
+            code = ''
+        return code
+
+    def generate_report_block(self, file):
+        try:
+            code = '''
+            digraph G {
+            rankdir="LR"
+                subgraph block {
+                    bgcolor="#3371ff" node [style=filled shape=record]'''
+            
+            super_block = SuperBlock()
+            if not Fread_displacement(file, self.part_start, super_block):
+                printError(f'No se pudo leer el Super Bloque del disco {file.name}')
+                return code + '''block [label = "No se pudo leer el Super Bloque"];}'''
+            
+            code += super_block.generate_report_block(file)
+            code += '}\n}'
+        except Exception as e:
+            print(f'Error al generar el reporte: {e}')
+            code = ''
+        return code
+    
+    def generate_report_bm_inode(self, file):
+        try:
+            super_block = SuperBlock()
+            if not Fread_displacement(file, self.part_start, super_block):
+                printError(f'No se pudo leer el Super Bloque del disco {file.name}')
+                return ''
+            
+            code = Fread_displacement_data(file, super_block.s_bm_inode_start, super_block.s_inodes_count)
+            code = code.decode()
+        except Exception as e:
+            print(f'Error al generar el reporte: {e}')
+            code = ''
+        return code
+    
+    def generate_report_bm_block(self, file):
+        try:
+            super_block = SuperBlock()
+            if not Fread_displacement(file, self.part_start, super_block):
+                printError(f'No se pudo leer el Super Bloque del disco {file.name}')
+                return ''
+            
+            code = Fread_displacement_data(file, super_block.s_bm_block_start, super_block.s_blocks_count)
+            code = code.decode()
+        except Exception as e:
+            print(f'Error al generar el reporte: {e}')
+            code = ''
+        return code
+    
+    def generate_report_tree(self, file):
+        try:
+            code = '''
+            digraph G {
+            rankdir="LR"
+                subgraph tree {
+                    bgcolor="#3371ff" node [style=filled shape=record]'''
+            
+            super_block = SuperBlock()
+            if not Fread_displacement(file, self.part_start, super_block):
+                printError(f'No se pudo leer el Super Bloque del disco {file.name}')
+                return code + '''tree [label = "No se pudo leer el Super Bloque"];}'''
+            
+            code += super_block.generate_report_tree(file)
+            code += '}\n}'
+        except Exception as e:
+            print(f'Error al generar el reporte: {e}')
+            code = ''
+        return code
+    
+    def generate_report_sb(self, file):
+        try:
+            code = '''
+            digraph G {
+            rankdir="LR"
+                subgraph sb {
+                    bgcolor="#3371ff" node [style=filled shape=record] '''
+            
+            super_block = SuperBlock()
+            if not Fread_displacement(file, self.part_start, super_block):
+                printError(f'No se pudo leer el Super Bloque del disco {file.name}')
+                return code + '''sb [label = "No se pudo leer el Super Bloque"];}\n}'''
+            code += super_block.generate_report_sb(file)
+            code += '}\n}'
+        except Exception as e:
+            print(f'Error al generar el reporte: {e}')
+            code = ''
+        return code
+    
+    def generate_report_file(self, file, path):
+        try:
+            super_block = SuperBlock()
+            if not Fread_displacement(file, self.part_start, super_block):
+                printError(f'No se pudo leer el Super Bloque del disco {file.name}')
+                return ''
+            
+            code = super_block.generate_report_file(file, path)
+        except Exception as e:
+            print(f'Error al generar el reporte: {e}')
+            code = ''
+        return code
+    
+    def generate_report_ls(self, file):
+        return ''
+    
+    def generate_report_journaling(self, file):
+        try:
+            code = '''
+            digraph G {
+            rankdir="LR"
+                subgraph journaling {
+                    bgcolor="#3371ff" node [style=filled shape=record]'''
+            
+            super_block = SuperBlock()
+            if not Fread_displacement(file, self.part_start, super_block):
+                printError(f'No se pudo leer el Super Bloque del disco {file.name}')
+                return code + '''journaling [label = "No se pudo leer el Super Bloque"];}\n}'''
+            
+            if super_block.s_filesystem_type == 2:
+                printError(f'El sistema de archivos del disco {file.name} no es EXT3')
+                return code + '''journaling [label = "El sistema de archivos no es EXT3"];}\n}'''
+            
+            journaling = Journaling()
+            if not Fread_displacement(file, self.part_start + struct.calcsize(super_block.get_const()), journaling):
+                printError(f'No se pudo leer el Journaling del disco {file.name}')
+                return code + '''journaling [label = "No se pudo leer el Journaling"];}\n}'''
+            
+
+            code += journaling.generate_report_journaling()
             code += '}\n}'
         except Exception as e:
             print(f'Error al generar el reporte: {e}')
